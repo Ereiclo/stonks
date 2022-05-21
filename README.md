@@ -18,10 +18,10 @@ user=postgres
 
 3) Configuracion de Credenciales (\<repo\>/core/.pgpass)
 ```
-localhost:5432:db_stonks:\<usuario\>:\<contraseña\>
+localhost:5432:db_stonks:<usuario>:<contraseña>
 ```
 
 4) Privelegios de archivo de Credenciales
 ```
-chmod 0600 \<repo\>/core/.pgpass
+chmod 0600 <repo>/core/.pgpass
 ```
