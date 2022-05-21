@@ -1,6 +1,14 @@
 # Stonks
 
-## Configuracion de Conexion a Base de Datos (DJango-Postgres)
+## Instalacion
+
+### Creacion de Virtual Enviroment
+Requierements: venv
+```
+./create_venv.sh
+```
+
+### Configuracion de Conexion a Base de Datos (DJango-Postgres)
 
 1) Creacion de Base de Datos:
 ```
