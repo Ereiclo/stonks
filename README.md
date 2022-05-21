@@ -9,7 +9,7 @@ Requierements: venv
 ```
 
 ### Configuracion de Conexion a Base de Datos (DJango-Postgres)
-
+Requirements: PostgreSQL (NOTE: tiene que tener un usuario con contraseña)
 1) Creacion de Base de Datos:
 ```
 CREATE DATABASE db_stonks;
@@ -21,7 +21,7 @@ CREATE DATABASE db_stonks;
 host=localhost
 port=5432
 dbname=db_stonks
-user=postgres
+user=<usuario>
 ```
 
 3) Configuracion de Credenciales (\<repo\>/core/.pgpass)
