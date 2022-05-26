@@ -38,5 +38,5 @@ chmod 0600 <repo>/core/.pgpass
 
 b) WINDOWS: Configuracion de Variables de Entorno
 ```
-set PGSERVICEFILE=%cd%\.pg_service.conf
+set PGSERVICEFILE=%UserProfile%\.pg_service.conf
 ```
