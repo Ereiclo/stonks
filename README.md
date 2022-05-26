@@ -29,7 +29,14 @@ user=<usuario>
 localhost:5432:db_stonks:<usuario>:<contraseña>
 ```
 
-4) Privelegios de archivo de Credenciales
+4) Configuraciones de Sistema
+
+a) LINUX: Privelegios de archivo de Credenciales
 ```
 chmod 0600 <repo>/core/.pgpass
+```
+
+b) WINDOWS: Configuracion de Variables de Entorno
+```
+set PGSERVICEFILE=%UserProfile%\.pg_service.conf
 ```

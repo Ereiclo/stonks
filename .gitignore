@@ -6,7 +6,11 @@ __pycache__
 db.sqlite3
 media
 
+# Setup
 .pgpass
+
+# IDE
+.idea
 
 # Backup files # 
 *.bak 
