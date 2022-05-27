@@ -7,8 +7,9 @@ from django.views import generic,View
 def index(request):
     return HttpResponse("Demo: Stonks - Stocks App")
 
-class IndexView(View):
-    template_name = "stocks/index.html"
+
+class LoginView(View):
+    template_name = "stocks/login.html"
 
     def get(self, request, *args, **kwargs):
         return render(request,self.template_name)
