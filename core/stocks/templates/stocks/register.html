@@ -11,7 +11,7 @@
 
 	<form class="form-register " id="form">
 		<center><h4>Fomulario de registro</h4></center>
-
+		<p id="error-handling" style="display: none;">Usuario invalido</p>
 		<label for="username">Username:</label>
 		<input class="controls" type="text" name="username" id="username" placeholder="Ingrese su username">
 		<label for="password">Password:</label>
@@ -28,21 +28,32 @@
 
 <script>
     document.getElementById("form").onsubmit = e => {
-    e.preventDefault();
-    fetch('{% url 'api-register' %}',{
-        method: 'POST',
-        body: JSON.stringify({
-            'username': document.getElementById("username").value,
-            'password': document.getElementById("password").value,
-            'email': document.getElementById("email").value
-        }),
-        headers: {
-            "Content-Type": "application/json"
-        }
-        }).then(r => r.json()).then(json => {
-        console.log(json)
-        setCookie("token",json['token'],1)
-        })
+	e.preventDefault();
+	fetch('{% url 'api-register' %}',{
+	    method: 'POST',
+	    body: JSON.stringify({
+		'username': document.getElementById("username").value,
+		'password': document.getElementById("password").value,
+		'email': document.getElementById("email").value
+	    }),
+	    headers: {
+		"Content-Type": "application/json"
+	    }
+	}).then(r =>  r.json().then(data => ({status: r.status, response: data}))).then(json_response => {
+
+	    console.log(json_response)
+	    if (json_response['status'] != 200) { // 400 | 404
+                document.getElementById("error-handling").style.display = "block";
+		
+            } else {
+		console.log(json_response['response']['token'])
+
+                document.getElementById("error-handling").style.display = "none";
+		setCookie("token",json_response['response']['token'],1)
+		location.href = "{% url 'user' %}"
+            }
+
+	})
     }
 </script>
 
