@@ -15,28 +15,14 @@ Requirements: PostgreSQL (NOTE: tiene que tener un usuario con contraseña)
 CREATE DATABASE db_stonks;
 ```
 
-2) Configuracion de Servicio (~/.pg_service.conf):
-```
-[db_service]
-host=localhost
-port=5432
-dbname=db_stonks
-user=<usuario>
-```
-
-3) Configuracion de Credenciales (\<repo\>/core/.pgpass)
+2) Configuracion de Credenciales (\<repo\>/core/.pgpass)
 ```
 localhost:5432:db_stonks:<usuario>:<contraseña>
+localhost:5432:test_db_stonks:<usuario>:<contraseña>
+localhost:5432:postgres:<usuario>:<contraseña>
 ```
 
-4) Configuraciones de Sistema
-
-a) LINUX: Privelegios de archivo de Credenciales
+3) Privelegios de archivo de Credenciales (solo LINUX)
 ```
 chmod 0600 <repo>/core/.pgpass
-```
-
-b) WINDOWS: Configuracion de Variables de Entorno
-```
-set PGSERVICEFILE=%UserProfile%\.pg_service.conf
 ```
