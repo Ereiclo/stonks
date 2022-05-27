@@ -4,9 +4,16 @@ from django.views import generic,View
 
 
 # Create your views here.
+"""
 def index(request):
     return HttpResponse("Demo: Stonks - Stocks App")
+"""
 
+class IndexView(View):
+    template_name = "stocks/index.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request,self.template_name)
 
 class LoginView(View):
     template_name = "stocks/login.html"
@@ -22,9 +29,20 @@ class RegisterView(View):
         return render(request,self.template_name)
 
 
+class AccountView(View):
+    template_name = "stocks/account.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request,self.template_name)
+
+
+
+
+
+
 #Demo
 class DemoView(View):
-    template_name = "stocks/index.html"
+    template_name = "stocks/user_test.html"
 
     def get(self, request, *args, **kwargs):
         return render(request,self.template_name)

@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Confirmacion de Login</title>
+</head>
+<body>
+	<form class="form-register " id="form">
+		<center><h4>Confirmar Login</h4></center>
+		<input class="boton" type="submit" value="Confirmar" >
+	</form>
+</body>
+
+<script src="{% static '/js/cookie_manager.js' %}" type="text/javascript"></script>
+
+<script>
+    document.getElementById("form").onsubmit = e => {
+    e.preventDefault();
+    fetch('{% url 'api-user' %}',{
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Token "+getCookie("token")
+        }
+        }).then(r => r.json()).then(json => {
+            console.log(json)
+        })
+    }
+</script>
+
+</html>
