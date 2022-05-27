@@ -26,10 +26,44 @@ class AccountTests(APITestCase):
         """
         Ensure we can create a new account object.
         """
+        # Crear usuario en BD
+        # Usar endpoint intentando logear con contraseña erronea
+        # Assert respuesta de error
+        # Usar endpoint de login con contraseña correcta
+        # Assert respuesta de exito
+        pass
+
+    def test_logout_account(self):
+        """
+        Ensure we can logout of current session.
+        """
+        # Crear usuario en BD
+        # Usar endpoint para logear usuario
+        # Assert token generado en BD
+        # Usar endpoint para logout usuario
+        # Assert token invalido
+        pass
+
+    def test_logoutall_account(self):
+        """
+        Ensure we can create a new account object.
+        """
+        # Crear usuario en BD
+        # Usar endpoint para logear usuario (token 1)
+        # Usar endpoint para logear usuario (token 2)
+        # Usar endpoint para logout usuario con token 1
+        # Assert token 2 invalido
         pass
 
     def test_token_validation(self):
         """
         Ensure the created token can be used to access-session restricted resources.
         """
+        # Crear usuario en BD
+        # Usar endpoint de user sin estar loggeado
+        # Assert respuesta de error
+        # Usar endpoint de login
+        # Usar Token de login para acceder a endpoint de user
+        # Assert respuesta de exito
         pass
+
