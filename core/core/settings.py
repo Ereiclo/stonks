@@ -82,8 +82,6 @@ DATABASES = {
         'NAME': 'db_stonks',
         'USER': 'postgres',
         'OPTIONS': {
-            # Service File - Incompatible with Testing
-            # 'service': 'db_service',
             # Password File - Must contain credentials for NAME, test_NAME and postgres databases
             'passfile': '.pgpass',
         },
