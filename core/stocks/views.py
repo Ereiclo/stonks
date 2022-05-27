@@ -20,3 +20,11 @@ class RegisterView(View):
 
     def get(self, request, *args, **kwargs):
         return render(request,self.template_name)
+
+
+#Demo
+class DemoView(View):
+    template_name = "stocks/index.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request,self.template_name)
