@@ -12,3 +12,10 @@ class IndexView(View):
 
     def get(self, request, *args, **kwargs):
         return render(request,self.template_name)
+
+
+class RegisterView(View):
+    template_name = "stocks/register.html"
+
+    def get(self, request, *args, **kwargs):
+        return render(request,self.template_name)

@@ -4,62 +4,24 @@
 
 <head>
 
-	<title>Formulario de registro</title>
+	<title>Login</title>
 	<link rel="stylesheet" type="text/css" href="{%static 'stocks/style.css' %}">
 </head>
 <body>
+		
 
-	<form class="form-register " id="form">
-		<center><h4>Fomulario de registro</h4></center>
-
-		<label for="username">Username:</label>
+	<form class="form-register ">
+		<center><h4>Login</h4></center>
+		<label for="username">Username:<//label>
 		<input class="controls" type="text" name="username" id="username" placeholder="Ingrese su username">
-		<label for="password">Password:</label>
-		<input class="controls" type="password" name="password" id="password" placeholder="Ingrese su password">
-		<label for="password">Email:</label>
-		<input class="controls" type="text" name="email" id="email" placeholder="Ingrese su email">
+		<label for="password">Password:<//label>
+		<input class="controls" type="text" name="password" id="password" placeholder="Ingrese su password">
+		
 
-		<input class="boton" type="submit" value="Registrar" >
+		<input class="boton2" type="submit" value="Ingresar" >
 
 	</form>
 
 
 </body>
-    <script>
-
-	function setCookie(cname, cvalue, exdays) {
-		    const d = new Date();
-		    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-		    let expires = "expires="+d.toUTCString();
-		    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-	}
-
-
-	document.getElementById("form").onsubmit = e => {
-
-	    e.preventDefault();
-	    
-
-	    fetch('http://127.0.0.1:8000/accounts/api/auth/register',{
-		method: 'POST',
-		body: JSON.stringify({
-		    'username': document.getElementById("username").value,
-		    'password': document.getElementById("password").value,
-		    'email': document.getElementById("email").value
-		}),
-		headers: {
-		    "Content-Type": "application/json"
-		}
-	    }).then(r => r.json()).then(json => {
-		console.log(json)
-		setCookie("token",json['token'],1)
-
-		
-	    })
-
-
-
-	}
-
-    </script>
 </html>
