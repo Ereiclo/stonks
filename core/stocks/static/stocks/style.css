@@ -60,3 +60,53 @@ body{
 	margin: 16px 0;
 	font-size: 16px;
 }
+
+.form-register .boton_login{
+	width: 100%;
+	background: #1f53c5;
+	border: none;
+	padding: 12px;
+	color: white;
+	margin: 16px 0;
+	font-size: 16px;
+}
+
+.form-register .boton_register{
+	width: 100%;
+	background: #1f53c5;
+	border: none;
+	padding: 12px;
+	color: white;
+	margin: 16px 0;
+	font-size: 16px;
+}
+
+.form-register .boton_logout{
+	width: 100%;
+	background: #1f53c5;
+	border: none;
+	padding: 12px;
+	color: white;
+	margin: 16px 0;
+	font-size: 16px;
+}
+
+.form-register .boton_logout_all{
+	width: 100%;
+	background: #1f53c5;
+	border: none;
+	padding: 12px;
+	color: white;
+	margin: 16px 0;
+	font-size: 16px;
+}
+
+.form-register .boton_test{
+	width: 100%;
+	background: #1f53c5;
+	border: none;
+	padding: 12px;
+	color: white;
+	margin: 16px 0;
+	font-size: 16px;
+}

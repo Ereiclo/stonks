@@ -3,30 +3,20 @@
 <html lang="en">
 
 <head>
-	<title>Confirmacion de Login</title>
+
+    <title>Welcome to Stonks</title>
+    <link rel="stylesheet" type="text/css" href="{%static 'stocks/style.css' %}">
 </head>
 <body>
-	<form class="form-register " id="form">
-		<center><h4>Confirmar Login</h4></center>
-		<input class="boton" type="submit" value="Confirmar" >
-	</form>
+        
+
+    <div class="form-register ">
+        <center><h4>Welcome to Stonks</h4></center>
+        <center><img src="{%static 'stocks/images/stonks.jpg' %}" width="300" height="200" alt="stonks.jpg"></center>
+        <input class="boton_login" onclick="location.href = '{% url 'login' %}';" type="submit" value="Login" >
+        <input class="boton_register" onclick="location.href = '{% url 'register' %}';" type="submit" value="Register" >
+    </div>
+
+
 </body>
-
-<script src="{% static '/js/cookie_manager.js' %}" type="text/javascript"></script>
-
-<script>
-    document.getElementById("form").onsubmit = e => {
-    e.preventDefault();
-    fetch('{% url 'api-user' %}',{
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Token "+getCookie("token")
-        }
-        }).then(r => r.json()).then(json => {
-            console.log(json)
-        })
-    }
-</script>
-
 </html>
