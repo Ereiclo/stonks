@@ -14,7 +14,7 @@
         <center><h4>Account</h4></center>
 
         <center><img src="{%static 'stocks/images/maxresdefault.jpg' %}" width="200" height="200" alt="account_img"></center>
-
+		<p id="error-handling" style="display: none;">Error Inesperado</p>
         <input id="boton_test" class="boton_test" type="submit" value="Test" >
         <input id="boton_logout" class="boton_logout" type="submit" value="Logout" >
         <input id="boton_logout_all" class="boton_logout_all" type="submit" value="Logout all" >
@@ -35,7 +35,7 @@
             "Authorization": "Token "+getCookie("token")
         }
         }).then(r => r.json()).then(json => {
-            console.log(json)
+            console.log(json);
         })
     }
 
@@ -48,9 +48,14 @@
         "Content-Type": "application/json",
         "Authorization": "Token " + getCookie("token")
         }
-    }).then(r => r.json()).then(json => {
-        console.log(json)
-        location.href = "{% url 'user-index' %}"
+    }).then(r =>  r.text().then(data => ({status: r.status, response: data}))).then(json_response => {
+        console.log(json_response);
+        if (json_response['status'] != 204) {
+            document.getElementById("error-handling").style.display = "block";
+        } else {
+            document.getElementById("error-handling").style.display = "none";
+            location.href = "{% url 'user-index' %}";
+        }
     })
     }
 
@@ -63,9 +68,14 @@
         "Content-Type": "application/json",
         "Authorization": "Token " + getCookie("token")
         }
-    }).then(r => r.json()).then(json => {
-        console.log(json)
-        location.href = "{% url 'user-index' %}"
+    }).then(r =>  r.text().then(data => ({status: r.status, response: data}))).then(json_response => {
+        console.log(json_response);
+        if (json_response['status'] != 204) {
+            document.getElementById("error-handling").style.display = "block";
+        } else {
+            document.getElementById("error-handling").style.display = "none";
+            location.href = "{% url 'user-index' %}";
+        }
     })
     }
 </script>
