@@ -13,17 +13,17 @@
 	<form class="form-register" id = "form">
 		<center><h4>Login</h4></center>
 		<p id="error-handling" style="display: none;">Credenciales invalidas</p>
-		<label for="username">Username:<//label>
+		<label for="username">Username:
 		<input class="controls" type="text" name="username" id="username" placeholder="Ingrese su username">
-		<label for="password">Password:<//label>
+		<label for="password">Password:
 		<input class="controls" type="password" name="password" id="password" placeholder="Ingrese su password">
 		
 
 		<input class="boton2" type="submit" value="Ingresar" >
-
 	</form>
-
-
+    <div class="div-register" >
+        <input class="boton2" onclick="location.href = '{% url 'register' %}';" type="submit" value="Register" >
+    </div>
 </body>
 
     <script src="{% static '/js/cookie_manager.js' %}" type="text/javascript"></script>
