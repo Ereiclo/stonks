@@ -13,11 +13,11 @@ import base64
 
 class AccountTests(APITestCase):
 
-    register_url = reverse('register')
-    login_url = reverse('login')
-    user_url = reverse('user')
-    logout_url = reverse('logout')
-    logoutall_url = reverse('logoutall')
+    register_url = reverse('api-register')
+    login_url = reverse('api-login')
+    user_url = reverse('api-user')
+    logout_url = reverse('api-logout')
+    logoutall_url = reverse('api-logoutall')
 
     register_data = {
         'username': 'TestUser',
@@ -79,12 +79,12 @@ class AccountTests(APITestCase):
         """
         self.utility_test_register()
 
-        login_url = reverse('login')
 
-        response = self.client.post(login_url, self.bad_login_data, format='json')
+
+        response = self.client.post(self.login_url, self.bad_login_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
-        response = self.client.post(login_url, self.good_login_data, format='json')
+        response = self.client.post(self.login_url, self.good_login_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # Crear usuario en BD
