@@ -12,21 +12,28 @@
 	<form class="form-register " id="form">
 		<center><h4>Fomulario de registro</h4></center>
 		<p id="error-handling" style="display: none;">Usuario invalido</p>
-		<label for="username">Username:</label>
+		<label for="username">Username:
 		<input class="controls" type="text" name="username" id="username" placeholder="Ingrese su username">
-		<label for="password">Password:</label>
+		<label for="password">Password:
 		<input class="controls" type="password" name="password" id="password" placeholder="Ingrese su password">
-		<label for="password">Email:</label>
+		<label for="password">Email:
 		<input class="controls" type="text" name="email" id="email" placeholder="Ingrese su email">
 
 		<input class="boton" type="submit" value="Registrar" >
 
 	</form>
+    <div class="div-register" >
+        <input id="redirect-login" class="boton2" type="submit" value="Login" >
+    </div>
 </body>
 
 <script src="{% static '/js/cookie_manager.js' %}" type="text/javascript"></script>
 
 <script>
+    document.getElementById("redirect-login").onclick = e => {
+        e.preventDefault();
+        location.href = '{% url 'login' %}';
+    }
     document.getElementById("form").onsubmit = e => {
 	e.preventDefault();
 	fetch('{% url 'api-register' %}',{
