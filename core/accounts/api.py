@@ -13,6 +13,7 @@ class RegisterAPI(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        print(serializer.is_valid())
         user = serializer.save()
         token = KnoxAuthToken.objects.create(user)
         return Response({
@@ -41,3 +42,4 @@ class MainUser(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+ 
