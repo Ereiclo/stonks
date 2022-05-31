@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.test import APITestCase
 from django.contrib.auth.models import User
+from .models import Client
 from knox.models import AuthToken
 import base64
 
@@ -20,16 +21,18 @@ class AccountTests(APITestCase):
     logoutall_url = reverse('api-logoutall')
 
     register_data = {
-        'username': 'TestUser',
+        'dni': '12345678',
+        'names': 'TestName',
+        'lastname': 'TestLastName',
         'password': 'TestPassword',
         'email': 'test@test.com'
     }
     bad_login_data = {
-        'username': 'TestUser',
+        'username': '12345678',
         'password': 'BadPassword'
     }
     good_login_data = {
-        'username': 'TestUser',
+        'username': '12345678',
         'password': 'TestPassword'
     }
 
@@ -39,9 +42,9 @@ class AccountTests(APITestCase):
         """
         response = self.client.post(self.register_url, self.register_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(User.objects.count(), 1)
-        self.assertEqual(User.objects.get().username, 'TestUser')
-        self.assertEqual(User.objects.get().email, 'test@test.com')
+        self.assertEqual(Client.objects.count(), 1)
+        self.assertEqual(Client.objects.get().dni, '12345678')
+        self.assertEqual(Client.objects.get().email, 'test@test.com')
 
     def utility_test_login(self):
         """
