@@ -20,7 +20,7 @@ from django.views.generic.base import RedirectView
 favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
 
 apipatterns = [
-    path('accounts/', include('accounts.urls_api')),
+    path('auth/', include('accounts.urls_api')),
     path('stocks/', include('stocks.urls_api')),
 ]
 
