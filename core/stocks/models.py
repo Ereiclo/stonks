@@ -4,9 +4,8 @@ from accounts.models import Client
 
 class Company(models.Model):
     ruc = models.CharField(max_length=11, primary_key=True)
-    acronym = models.CharField(max_length=12)
+    acronym = models.CharField(max_length=12, unique=True)
     lastest_price = models.DecimalField(max_digits=7,decimal_places=2)
-
     stocks_for_client = models.ManyToManyField(Client, through="Portfolio")
 
 
