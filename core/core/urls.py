@@ -27,6 +27,7 @@ apipatterns = [
 urlpatterns = [
     path('favicon.ico', favicon_view),
     path('stocks/', include('accounts.urls_views')),
+    path('stocks/', include('stocks.urls_views')),
     path('api/', include(apipatterns)),
     path('admin/', admin.site.urls),
 ]

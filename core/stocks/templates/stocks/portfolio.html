@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -5,11 +6,11 @@
 <head>
 
 	<title>Stocks Portfolio</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'stocks/style.css' %}">
 </head>
 <body>
 	<nav>
-<div class="logo"><img src="st.png" width="180" height="80"></div>
+<div class="logo"><img src="{% static 'stocks/images/st.png' %}" width="180" height="80"></div>
     <div class="barnav">
     <div><h3>Perfil</h3></div>
     <div><h3>Portafolio</h3></div>
