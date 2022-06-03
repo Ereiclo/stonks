@@ -7,105 +7,119 @@ from .models import Portfolio, Company, Order
 
 
 class StocksTests(APITestCase):
-    portafolio_url = reverse('api-portafolio')
 
-    user1_data = {
-        'dni': '12345678',
-        'names': 'TestName',
-        'lastname': 'TestLastName',
-        'password': 'TestPassword',
-        'email': 'test@test.com'
-    }
+    def setUp(self):
+        super().__init__()
+        # Data dictionaries
+        self.user1_data = {
+            'dni': '12345678',
+            'names': 'TestName',
+            'lastname': 'TestLastName',
+            'password': 'TestPassword',
+            'email': 'test@test.com'
+        }
 
-    user2_data = {
-        'dni': '87654321',
-        'names': 'ExtraName',
-        'lastname': 'ExtraLastName',
-        'password': 'ExtraPassword',
-        'email': 'extra@test.com'
-    }
+        self.user2_data = {
+            'dni': '87654321',
+            'names': 'ExtraName',
+            'lastname': 'ExtraLastName',
+            'password': 'ExtraPassword',
+            'email': 'extra@test.com'
+        }
 
-    companies_data = [
-        {
-            'ruc': '12345678901',
-            'acronym': 'TST',
-            'lastest_price': 52.50,
-        },
-        {
-            'ruc': '12345678902',
-            'acronym': 'MOV',
-            'lastest_price': 28.30,
-        },
-    ]
+        self.companies_data = [
+            {
+                'ruc': '12345678901',
+                'acronym': 'TST',
+                'lastest_price': 52.50,
+            },
+            {
+                'ruc': '12345678902',
+                'acronym': 'MOV',
+                'lastest_price': 28.30,
+            },
+        ]
 
-    portafolio1_data = [
-        {
-            'client_dni': user1_data['dni'],
-            'company_ruc': companies_data[0]['ruc'],
-            'quantity': 5,
-        },
-        {
-            'client_dni': user1_data['dni'],
-            'company_ruc': companies_data[1]['ruc'],
-            'quantity': 10,
-        },
-    ]
+        self.portafolio1_data = [
+            {
+                'client_dni': self.user1_data['dni'],
+                'company_ruc': self.companies_data[0]['ruc'],
+                'quantity': 5,
+            },
+            {
+                'client_dni': self.user1_data['dni'],
+                'company_ruc': self.companies_data[1]['ruc'],
+                'quantity': 10,
+            },
+        ]
 
-    portafolio2_data = [
-        {
-            'client_dni': user2_data['dni'],
-            'company_ruc': companies_data[0]['ruc'],
-            'quantity': 10,
-        },
-        {
-            'client_dni': user2_data['dni'],
-            'company_ruc': companies_data[1]['ruc'],
-            'quantity': 20,
-        },
-    ]
+        self.portafolio2_data = [
+            {
+                'client_dni': self.user2_data['dni'],
+                'company_ruc': self.companies_data[0]['ruc'],
+                'quantity': 10,
+            },
+            {
+                'client_dni': self.user2_data['dni'],
+                'company_ruc': self.companies_data[1]['ruc'],
+                'quantity': 20,
+            },
+        ]
 
-    orders1_data = [
-        {
-            'client_dni': user1_data['dni'],
-            'company_ruc': companies_data[0]['ruc'],
-            'quantity': 15,
-            'price': 25.62,
-            'transaction_type': Order.TransactionType.BUY_LIMIT,
-        },
-        {
-            'client_dni': user1_data['dni'],
-            'company_ruc': companies_data[1]['ruc'],
-            'quantity': 20,
-            'price': 23.41,
-            'transaction_type': Order.TransactionType.SELL_STOP,
-        },
-    ]
+        self.orders1_data = [
+            {
+                'client_dni': self.user1_data['dni'],
+                'company_ruc': self.companies_data[0]['ruc'],
+                'quantity': 15,
+                'price': 25.62,
+                'transaction_type': Order.TransactionType.BUY_LIMIT,
+            },
+            {
+                'client_dni': self.user1_data['dni'],
+                'company_ruc': self.companies_data[1]['ruc'],
+                'quantity': 20,
+                'price': 23.41,
+                'transaction_type': Order.TransactionType.SELL_STOP,
+            },
+        ]
 
-    orders2_data = [
-        {
-            'client_dni': user2_data['dni'],
-            'company_ruc': companies_data[0]['ruc'],
-            'quantity': 11,
-            'price': 78.94,
-            'transaction_type': Order.TransactionType.BUY_MARKET,
-        },
-        {
-            'client_dni': user2_data['dni'],
-            'company_ruc': companies_data[1]['ruc'],
-            'quantity': 19,
-            'price': 65.21,
-            'transaction_type': Order.TransactionType.SELL_LIMIT,
-        },
-    ]
+        self.orders2_data = [
+            {
+                'client_dni': self.user2_data['dni'],
+                'company_ruc': self.companies_data[0]['ruc'],
+                'quantity': 11,
+                'price': 78.94,
+                'transaction_type': Order.TransactionType.BUY_MARKET,
+            },
+            {
+                'client_dni': self.user2_data['dni'],
+                'company_ruc': self.companies_data[1]['ruc'],
+                'quantity': 19,
+                'price': 65.21,
+                'transaction_type': Order.TransactionType.SELL_LIMIT,
+            },
+        ]
 
-    test_company = companies_data[0]['acronym']
-    orders_by_company_url = reverse('api-order-by-company', args=[test_company, ])
+        test_company = self.companies_data[0]['acronym']
 
-    expected_orders1 = [orders1_data[0], ]
-    expected_orders1[0]['transaction_type'] = str(expected_orders1[0]['transaction_type'])
+        self.expected_orders1 = [self.orders1_data[0], ]
+        self.expected_orders1[0]['transaction_type'] = str(self.expected_orders1[0]['transaction_type'])
 
-    expected_orders2 = [orders2_data[0], ]
-    expected_orders2[0]['transaction_type'] = str(expected_orders2[0]['transaction_type'])
+        self.expected_orders2 = [self.orders2_data[0], ]
+        self.expected_orders2[0]['transaction_type'] = str(self.expected_orders2[0]['transaction_type'])
+
+        # Urls
+        self.portafolio_url = reverse('api-portafolio')
+        self.orders_by_company_url = reverse('api-order-by-company', args=[test_company, ])
+
+        # Generate Database
+        self.token_user1 = self.utility_generate_user_data_and_token(self.user1_data)
+        self.token_user2 = self.utility_generate_user_data_and_token(self.user2_data)
+        self.utility_generate_companies(self.companies_data)
+        self.utility_generate_portafolio(self.portafolio1_data)
+        self.utility_generate_portafolio(self.portafolio2_data)
+        self.utility_generate_orders(self.orders1_data)
+        self.utility_generate_orders(self.orders2_data)
 
     def utility_generate_user_data_and_token(self, user_data):
         """
@@ -134,7 +148,7 @@ class StocksTests(APITestCase):
 
     def utility_generate_orders(self, orders_list):
         """
-        Create portafolio data.
+        Create order data.
         """
         for o in orders_list:
             tmp = o.copy()
@@ -175,25 +189,15 @@ class StocksTests(APITestCase):
         """
         Test portafolio
         """
-        token_user1 = self.utility_generate_user_data_and_token(self.user1_data)
-        token_user2 = self.utility_generate_user_data_and_token(self.user2_data)
-        self.utility_generate_companies(self.companies_data)
-        self.utility_generate_portafolio(self.portafolio1_data)
-        self.utility_generate_portafolio(self.portafolio2_data)
-        self.utility_assert_equal_portafolio(token_user1, self.portafolio1_data)
-        self.utility_assert_equal_portafolio(token_user2, self.portafolio2_data)
+        self.utility_assert_equal_portafolio(self.token_user1, self.portafolio1_data)
+        self.utility_assert_equal_portafolio(self.token_user2, self.portafolio2_data)
 
     def test_order(self):
         """
         Test Order
         """
-        token_user1 = self.utility_generate_user_data_and_token(self.user1_data)
-        token_user2 = self.utility_generate_user_data_and_token(self.user2_data)
-        self.utility_generate_companies(self.companies_data)
-        self.utility_generate_orders(self.orders1_data)
-        self.utility_generate_orders(self.orders2_data)
-        self.utility_assert_equal_orders(token_user1, self.expected_orders1)
-        self.utility_assert_equal_orders(token_user2, self.expected_orders2)
+        self.utility_assert_equal_orders(self.token_user1, self.expected_orders1)
+        self.utility_assert_equal_orders(self.token_user2, self.expected_orders2)
 
 
 
