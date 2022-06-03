@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<head>
+
+	<title>Stocks Portfolio</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<nav>
+<div class="logo"><img src="st.png" width="180" height="80"></div>
+    <div class="barnav">
+    <div><h3>Perfil</h3></div>
+    <div><h3>Portafolio</h3></div>
+    <div><h3>Comprar</h3></div>
+</div>
+</nav>
+	<div class="port">
+		<center><h1>Portafolio</h1></center>
+	
+	<table width="800" id="table"></table>
+	</div>
+	
+<script>
+	var json = {"empresas":[{"Empresa":"Facebook","cantidad":4,"invertido":40,"Precio":40},{"Empresa":"Twitter","cantidad":5,"invertido":50,"Precio":50},{"Empresa":"Twitch","cantidad":6,"invertido":60,"Precio":60}]};
+	function portafolio(){
+    var DatosJson = JSON.parse(JSON.stringify(json));
+    console.log(DatosJson.empresas.length);
+    $("#table").append('<tr><td><center><h3>Empresa</h3></center></td><'+'<td><center><h3>Cantidad</h3></center></td>' +'<td><center><h3>Invertido</h3></center></td>' + '<td><center><h3>Precio</h3></center></td>'+ '<td> </td>');
+    for (i = 0; i < DatosJson.empresas.length; i++){
+ 
+ $("#table").append('<tr>' + '<td align="center" style="dislay: none;">' + DatosJson.empresas[i].Empresa + '</td>'+ '<td align="center" style="dislay: none;">' + DatosJson.empresas[i].cantidad + '</td>'+'<td align="center" style="dislay: none;">' + DatosJson.empresas[i].invertido + '</td>'+ '<td align="center" style="dislay: none;">' + DatosJson.empresas[i].Precio + '</td>'+ '<td align="center" style="dislay: none;"><button class="btd">' + "vender" + '</button></td>' + '</tr>');
+    }
+}
+portafolio();
+</script>
+
+</body>
+</html>

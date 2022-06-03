@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<head>
+
+	<title>Account</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<nav>
+	<div class="logo"><img src="st.png" width="180" height="80"></div>
+	    <div class="barnav">
+	    <div><h3>Perfil</h3></div>
+	    <div><h3>Portafolio</h3></div>
+	    <div><h3>Comprar</h3></div>
+	</div>
+	</nav>	
+	
+   <center><div class="port2">
+    	<div class="user">
+		<center><h2>Usuario</h2></center>		
+		
+        <img src="maxresdefault.jpg" width="200" height="200">
+   		</div> 
+		
+		<div class="t">
+			<center><h2>Datos</h2></center>
+			<center><table  width="800" id="table" ></table></center>
+		</div>
+		
+		<form class="fr">
+		
+		<input  class="boton_logout" type="submit" value="Logout" >
+		<input  class="boton_logout_all" type="submit" value="Logout all" >
+		<input  class="boton_update" type="submit" value="Update" >
+
+		</form>
+	</div></center>
+	<script>
+	var json = {"user":[{"Name":"Paulo","Lastname":"Cuaresma Puclla","DNI":71232378,"Email":"paulo.cuaresma@utec.edu.pe"}]};
+	function user(){
+    var DatosJson = JSON.parse(JSON.stringify(json));
+    console.log(DatosJson.user.length);
+    $("#table").append('<tr><th><h3>Nombre:</h3></th>'+'<td  style="dislay: none;">' + DatosJson.user[0].Name  + '</td>'+ '</tr>');
+   
+    $("#table").append('<tr><th><h3>Apellidos:</h3></th>'+ '<td style="dislay: none;">' + DatosJson.user[0].Lastname  + '</td>'+ '</tr>');
+	
+    $("#table").append('<tr><th><h3>DNI:</h3></th>'+'<td style="dislay: none;">' + DatosJson.user[0].DNI  + '</td>'+ '</tr>');
+    
+    $("#table").append('<tr><th><h3>Email:</h3></th>' +'<td style="dislay: none;">' + DatosJson.user[0].Email  + '</td>'+ '</tr>');
+  
+ }
+user();
+</script>
+
+
+</body>
+</html>
