@@ -31,11 +31,13 @@ class StocksTests(APITestCase):
             {
                 'ruc': '12345678901',
                 'acronym': 'TST',
+                'company_name': 'TestCompany',
                 'lastest_price': 52.50,
             },
             {
                 'ruc': '12345678902',
                 'acronym': 'MOV',
+                'company_name': 'MovementCompany',
                 'lastest_price': 28.30,
             },
         ]
