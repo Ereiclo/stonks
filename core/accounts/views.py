@@ -3,13 +3,7 @@ from django.views import View
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
-# Create your views here.
-"""
-def index(request):
-    return HttpResponse("Demo: Stonks - Stocks App")
-"""
-
-class IndexView(APIView):
+class IndexView(View):
     template_name = "stocks/index.html"
     permission_classes = (IsAuthenticated,)
 

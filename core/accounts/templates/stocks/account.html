@@ -58,12 +58,10 @@
 
     fetch('{% url 'api-user' %}',{
         method: 'POST',
-		body: JSON.stringify({
-		    'username': document.getElementById("username").value,
-		    'password': document.getElementById("password").value,
-		}),
+		body: JSON.stringify({}),
 		headers: {
-		    "Content-Type": "application/json"
+		    "Content-Type": "application/json",
+            "Authorization": "Token " + getCookie("token") 
 		}
     })
 
@@ -78,62 +76,6 @@
 
 
     }
-
-    // document.getElementById("boton_test").onclick = e => {
-    // e.preventDefault();
-    // fetch('{% url 'api-user' %}',{
-    //     method: 'GET',
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //         "Authorization": "Token "+getCookie("token")
-    //     }
-    //     }).then(r => r.json()).then(json => {
-    //         console.log(json);
-    //     })
-    // }
-
-	/*
-    document.getElementById("boton_logout").onclick = e => {
-    e.preventDefault();
-    fetch('{% url 'api-logout' %}',{
-        method: 'POST',
-        body: JSON.stringify({}),
-        headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Token " + getCookie("token")
-        }
-    }).then(r =>  r.text().then(data => ({status: r.status, response: data}))).then(json_response => {
-        console.log(json_response);
-        if (json_response['status'] != 204) {
-            document.getElementById("error-handling").style.display = "block";
-        } else {
-            document.getElementById("error-handling").style.display = "none";
-            location.href = "{% url 'user-index' %}";
-        }
-    })
-    }
-
-    document.getElementById("boton_logout_all").onclick = e => {
-    e.preventDefault();
-    fetch('{% url 'api-logoutall' %}',{
-        method: 'POST',
-        body: JSON.stringify({}),
-        headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Token " + getCookie("token")
-        }
-    }).then(r =>  r.text().then(data => ({status: r.status, response: data}))).then(json_response => {
-        console.log(json_response);
-        if (json_response['status'] != 204) {
-            document.getElementById("error-handling").style.display = "block";
-        } else {
-            document.getElementById("error-handling").style.display = "none";
-            location.href = "{% url 'user-index' %}";
-        }
-    })
-    }
-	*/
-
 
 </script>
 
