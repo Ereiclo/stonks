@@ -38,50 +38,6 @@
 
 		</form>
 	</div></center>
-<<<<<<< HEAD
-
-    <script src="{% static '/js/cookie_manager.js' %}" type="text/javascript"></script>
-
-	<script>
-	//var json = {"user":[{"Name":"Paulo","Lastname":"Cuaresma Puclla","DNI":71232378,"Email":"paulo.cuaresma@utec.edu.pe"}]};
-	function user(json){
-        var DatosJson = JSON.parse(JSON.stringify(json));
-        console.log(DatosJson.user.length);
-        $("#table").append('<tr><th><h3>Nombre:</h3></th>'+'<td  style="dislay: none;">' + DatosJson.user[0].Name  + '</td>'+ '</tr>');
-    
-        $("#table").append('<tr><th><h3>Apellidos:</h3></th>'+ '<td style="dislay: none;">' + DatosJson.user[0].Lastname  + '</td>'+ '</tr>');
-        
-        $("#table").append('<tr><th><h3>DNI:</h3></th>'+'<td style="dislay: none;">' + DatosJson.user[0].DNI  + '</td>'+ '</tr>');
-        
-        $("#table").append('<tr><th><h3>Email:</h3></th>' +'<td style="dislay: none;">' + DatosJson.user[0].Email  + '</td>'+ '</tr>');
-    
-    }
-
-    fetch('{% url 'api-user' %}',{
-        method: 'POST',
-		body: JSON.stringify({}),
-		headers: {
-		    "Content-Type": "application/json",
-            "Authorization": "Token " + getCookie("token") 
-		}
-    }).then(r =>  r.text().then(data => ({status: r.status, response: data}))).then(json_response => {
-        console.log(json_response);
-    })
-    
-
-	//user();
-
-
-
-
-
-    document.getElementById('comprar-div').onclick = () => {
-
-
-
-    }
-
-=======
 </body>
 
 <script src="{% static '/js/cookie_manager.js' %}" type="text/javascript"></script>
@@ -108,7 +64,6 @@
             load_data(json_response["response"])
         }
     })
->>>>>>> f1066b0e696aec3cecbc062303e3a018fe37366f
 </script>
 
 </html>
