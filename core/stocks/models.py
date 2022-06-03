@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 class Company(models.Model):
     ruc = models.CharField(max_length=11, primary_key=True)
     acronym = models.CharField(max_length=12, unique=True)
+    nombre = models.CharField(max_length=64)
     lastest_price = models.DecimalField(max_digits=7, decimal_places=2)
     stocks_for_client = models.ManyToManyField(Client, through="Portfolio")
 
