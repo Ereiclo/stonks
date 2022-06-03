@@ -39,18 +39,17 @@
 		</form>
 	</div></center>
 	<script>
-	var json = {"user":[{"Name":"Paulo","Lastname":"Cuaresma Puclla","DNI":71232378,"Email":"paulo.cuaresma@utec.edu.pe"}]};
-	function user(){
-    var DatosJson = JSON.parse(JSON.stringify(json));
-    console.log(DatosJson.user.length);
-    $("#table").append('<tr><th><h3>Nombre:</h3></th>'+'<td  style="dislay: none;">' + DatosJson.user[0].Name  + '</td>'+ '</tr>');
-   
-    $("#table").append('<tr><th><h3>Apellidos:</h3></th>'+ '<td style="dislay: none;">' + DatosJson.user[0].Lastname  + '</td>'+ '</tr>');
-	
-    $("#table").append('<tr><th><h3>DNI:</h3></th>'+'<td style="dislay: none;">' + DatosJson.user[0].DNI  + '</td>'+ '</tr>');
-    
-    $("#table").append('<tr><th><h3>Email:</h3></th>' +'<td style="dislay: none;">' + DatosJson.user[0].Email  + '</td>'+ '</tr>');
-  
+        var json = {"user":[{"Name":"Paulo","Lastname":"Cuaresma Puclla","DNI":71232378,"Email":"paulo.cuaresma@utec.edu.pe"}]};
+        function user(){
+        var DatosJson = JSON.parse(JSON.stringify(json));
+        console.log(DatosJson.user.length);
+        $("#table").append('<tr><th><h3>Nombre:</h3></th>'+'<td  style="dislay: none;">' + DatosJson.user[0].Name  + '</td>'+ '</tr>');
+
+        $("#table").append('<tr><th><h3>Apellidos:</h3></th>'+ '<td style="dislay: none;">' + DatosJson.user[0].Lastname  + '</td>'+ '</tr>');
+
+        $("#table").append('<tr><th><h3>DNI:</h3></th>'+'<td style="dislay: none;">' + DatosJson.user[0].DNI  + '</td>'+ '</tr>');
+
+        $("#table").append('<tr><th><h3>Email:</h3></th>' +'<td style="dislay: none;">' + DatosJson.user[0].Email  + '</td>'+ '</tr>');
 	}
 	user();
 
