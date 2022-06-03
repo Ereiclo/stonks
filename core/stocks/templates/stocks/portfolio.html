@@ -32,9 +32,10 @@
             }
         }).then(r => r.json().then(data => ({status: r.status, response:data}))).then(json_response => {
             data_json = json_response["response"]
+            console.log(data_json)
             $("#table").append('<tr><td><center><h3>Empresa</h3></center></td><'+'<td><center><h3>Cantidad</h3></center></td>' + '<td><center><h3>Precio</h3></center></td>'+ '<td> </td>');
             for (i = 0; i < data_json.length; i++){
-                $("#table").append('<tr>' + '<td align="center" style="dislay: none;">' + data_json[i]["company_ruc"] + '</td>'+ '<td align="center" style="dislay: none;">' + data_json[i]["quantity"] + '</td>' + '</td>'+ '<td align="center" style="dislay: none;"><button class="btd">' + "vender" + '</button></td>' + '</tr>');
+                $("#table").append('<tr>' + '<td align="center" style="dislay: none;">' + data_json[i]["company_ruc"]["company_name"] + '</td>'+ '<td align="center" style="dislay: none;">' + data_json[i]["quantity"] + '</td>' + '<td align="center" style="dislay: none;">' + data_json[i]["company_ruc"]["lastest_price"] + '</td>'+ '<td align="center" style="dislay: none;"><button class="btd">' + "vender" + '</button></td>' + '</tr>');
             }
         })
     </script>
