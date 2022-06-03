@@ -1,11 +1,12 @@
 from django.db import models
 from accounts.models import Client
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import RegexValidator
 
-
+acronym_validator = RegexValidator(r'[A-Z]{1,12}', 'Acrónimo inválido')
 class Company(models.Model):
     ruc = models.CharField(max_length=11, primary_key=True)
-    acronym = models.CharField(max_length=12, unique=True)
+    acronym = models.CharField(max_length=12, unique=True, validators=[acronym_validator])
     company_name = models.CharField(max_length=64)
     lastest_price = models.DecimalField(max_digits=7, decimal_places=2)
     stocks_for_client = models.ManyToManyField(Client, through="Portfolio")
