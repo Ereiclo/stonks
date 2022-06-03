@@ -43,21 +43,12 @@
 		    'password': document.getElementById("password").value,
 		}),
 		headers: {
-		    "Content-Type": "application/json"
+		    "Content-Type": "application/json",
+			"Authorization": "Token " + getCookie("token")
 		}
 	    }).then(r =>  r.json().then(data => ({status: r.status, response: data}))).then(json_response => {
+			console.log(json_response)
 
-		console.log(json_response)
-		if (json_response['status'] != 200) { // 400 | 404
-		    document.getElementById("error-handling").style.display = "block";
-
-		} else {
-		    console.log(json_response['response']['token'])
-
-		    document.getElementById("error-handling").style.display = "none";
-		    setCookie("token",json_response['response']['token'],1)
-		    location.href = "{% url 'user' %}"
-		}
 
 	    })
 	}
