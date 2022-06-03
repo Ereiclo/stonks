@@ -1,5 +1,9 @@
+from wsgiref.validate import validator
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.core.validators import RegexValidator
+
+dni_validator = RegexValidator(r'[0-9]{8}', 'DNI Inválido')
 
 
 class UserProfileManager(BaseUserManager):
@@ -20,7 +24,7 @@ class UserProfileManager(BaseUserManager):
 
 
 class Client(AbstractBaseUser, PermissionsMixin):
-    dni = models.CharField(max_length=8, primary_key=True, unique=True)
+    dni = models.CharField(max_length=8, primary_key=True, unique=True, validators=[dni_validator])
     names = models.CharField(max_length=80)
     lastname = models.CharField(max_length=120)
     email = models.EmailField(unique=True)
