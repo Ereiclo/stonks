@@ -63,9 +63,12 @@
 		    "Content-Type": "application/json",
             "Authorization": "Token " + getCookie("token") 
 		}
+    }).then(r =>  r.text().then(data => ({status: r.status, response: data}))).then(json_response => {
+        console.log(json_response);
     })
+    
 
-	user();
+	//user();
 
 
 

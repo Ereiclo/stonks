@@ -44,10 +44,15 @@
 		}),
 		headers: {
 		    "Content-Type": "application/json",
-			"Authorization": "Token " + getCookie("token")
 		}
 	    }).then(r =>  r.json().then(data => ({status: r.status, response: data}))).then(json_response => {
 			console.log(json_response)
+			if (json_response['status'] != 200) {
+				document.getElementById("error-handling").style.display = "block";
+			} else {
+				document.getElementById("error-handling").style.display = "none";
+				location.href = "{% url 'user' %}";
+			}
 
 
 	    })
