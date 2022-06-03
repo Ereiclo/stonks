@@ -38,6 +38,7 @@
 
 		</form>
 	</div></center>
+<<<<<<< HEAD
 
     <script src="{% static '/js/cookie_manager.js' %}" type="text/javascript"></script>
 
@@ -80,8 +81,34 @@
 
     }
 
+=======
+</body>
+
+<script src="{% static '/js/cookie_manager.js' %}" type="text/javascript"></script>
+
+<script>
+    function load_data(DatosJson){
+        console.log(DatosJson);
+        $("#table").append('<tr><th><h3>Nombre:</h3></th>'+'<td  style="dislay: none;">' + DatosJson["names"]  + '</td>'+ '</tr>');
+        $("#table").append('<tr><th><h3>Apellidos:</h3></th>'+ '<td style="dislay: none;">' + DatosJson["lastname"]  + '</td>'+ '</tr>');
+        $("#table").append('<tr><th><h3>DNI:</h3></th>'+'<td style="dislay: none;">' + DatosJson["dni"]  + '</td>'+ '</tr>');
+        $("#table").append('<tr><th><h3>Email:</h3></th>' +'<td style="dislay: none;">' + DatosJson["email"]  + '</td>'+ '</tr>');
+    }
+
+    fetch('{% url 'api-user' %}',{
+        method: 'GET',
+        headers: {
+            "Authorization": "Token " + getCookie("token")
+        }
+    }).then(r =>  r.json().then(data => ({status: r.status, response: data}))).then(json_response => {
+        console.log(json_response)
+        if (json_response['status'] != 200) {
+            location.href = "{% url 'login' %}";
+        } else {
+            load_data(json_response["response"])
+        }
+    })
+>>>>>>> f1066b0e696aec3cecbc062303e3a018fe37366f
 </script>
 
-
-</body>
 </html>
