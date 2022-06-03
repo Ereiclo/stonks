@@ -32,9 +32,9 @@
 		
 		<form class="fr">
 		
-		<input  class="boton_logout" type="submit" value="Logout" >
-		<input  class="boton_logout_all" type="submit" value="Logout all" >
-		<input  class="boton_update" type="submit" value="Update" >
+		<input  id="boton_logout" class="boton_logout" type="submit" value="Logout" >
+		<input  id="boton_logout_all" class="boton_logout_all" type="submit" value="Logout all" >
+		<input  id="boton_update" class="boton_update" type="submit" value="Update" >
 
 		</form>
 	</div></center>
@@ -64,6 +64,43 @@
             load_data(json_response["response"])
         }
     })
+
+
+    document.getElementById("boton_logout").onclick = e => {
+    e.preventDefault();
+    fetch('{% url 'api-logout' %}',{
+        method: 'POST',
+        body: JSON.stringify({}),
+        headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Token " + getCookie("token")
+        }
+    }).then(r =>  r.text().then(data => ({status: r.status, response: data}))).then(json_response => {
+        console.log(json_response);
+        if (json_response['status'] == 204) {
+            setCookie("token",null,0)
+            location.href = "{% url 'user-index' %}";
+        }
+    })
+    }
+
+    document.getElementById("boton_logout_all").onclick = e => {
+    e.preventDefault();
+    fetch('{% url 'api-logoutall' %}',{
+        method: 'POST',
+        body: JSON.stringify({}),
+        headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Token " + getCookie("token")
+        }
+    }).then(r =>  r.text().then(data => ({status: r.status, response: data}))).then(json_response => {
+        console.log(json_response);
+        if (json_response['status'] == 204) {
+            setCookie("token",null,0)
+            location.href = "{% url 'user-index' %}";
+        }
+    })
+    }
 </script>
 
 </html>
