@@ -8,6 +8,7 @@ from .serializers import UserSerializer, RegisterSerializer
 
 
 class RegisterAPI(generics.GenericAPIView):
+    permission_classes = (permissions.AllowAny,)
     serializer_class = RegisterSerializer
 
     def post(self, request, *args, **kwargs):
@@ -33,13 +34,9 @@ class LoginAPI(KnoxLoginView):
         return super(LoginAPI, self).post(request, format=None)
 
 
-# DEMO
-class MainUser(generics.RetrieveAPIView):
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
+class UserDetailsAPI(generics.RetrieveAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
- 
+
