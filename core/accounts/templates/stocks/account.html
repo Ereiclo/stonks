@@ -10,7 +10,7 @@
 </head>
 <body>
 	<nav>
-	<div class="logo"><img src="{%static 'stocks/images/st.png' " width="180" height="80"></div>
+	<div class="logo"><img src="{%static 'stocks/images/st.png'%}" width="180" height="80"></div>
 	    <div class="barnav">
 	    <div><h3>Perfil</h3></div>
 	    <div><h3>Portafolio</h3></div>
@@ -32,42 +32,40 @@
 		
 		<form class="fr">
 		
-		<input  class="boton_logout" type="submit" value="Logout" >
-		<input  class="boton_logout_all" type="submit" value="Logout all" >
-		<input  class="boton_update" type="submit" value="Update" >
+		<input  id="boton_logout" class="boton_logout" type="submit" value="Logout" >
+		<input  id="boton_logout_all" class="boton_logout_all" type="submit" value="Logout all" >
+		<input  id="boton_update" class="boton_update" type="submit" value="Update" >
 
 		</form>
 	</div></center>
-	<script>
-	var json = {"user":[{"Name":"Paulo","Lastname":"Cuaresma Puclla","DNI":71232378,"Email":"paulo.cuaresma@utec.edu.pe"}]};
-	function user(){
-    var DatosJson = JSON.parse(JSON.stringify(json));
-    console.log(DatosJson.user.length);
-    $("#table").append('<tr><th><h3>Nombre:</h3></th>'+'<td  style="dislay: none;">' + DatosJson.user[0].Name  + '</td>'+ '</tr>');
-   
-    $("#table").append('<tr><th><h3>Apellidos:</h3></th>'+ '<td style="dislay: none;">' + DatosJson.user[0].Lastname  + '</td>'+ '</tr>');
-	
-    $("#table").append('<tr><th><h3>DNI:</h3></th>'+'<td style="dislay: none;">' + DatosJson.user[0].DNI  + '</td>'+ '</tr>');
-    
-    $("#table").append('<tr><th><h3>Email:</h3></th>' +'<td style="dislay: none;">' + DatosJson.user[0].Email  + '</td>'+ '</tr>');
-  
-	}
-	user();
+</body>
 
-    // document.getElementById("boton_test").onclick = e => {
-    // e.preventDefault();
-    // fetch('{% url 'api-user' %}',{
-    //     method: 'GET',
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //         "Authorization": "Token "+getCookie("token")
-    //     }
-    //     }).then(r => r.json()).then(json => {
-    //         console.log(json);
-    //     })
-    // }
+<script src="{% static '/js/cookie_manager.js' %}" type="text/javascript"></script>
 
-	/*
+<script>
+    function load_data(DatosJson){
+        console.log(DatosJson);
+        $("#table").append('<tr><th><h3>Nombre:</h3></th>'+'<td  style="dislay: none;">' + DatosJson["names"]  + '</td>'+ '</tr>');
+        $("#table").append('<tr><th><h3>Apellidos:</h3></th>'+ '<td style="dislay: none;">' + DatosJson["lastname"]  + '</td>'+ '</tr>');
+        $("#table").append('<tr><th><h3>DNI:</h3></th>'+'<td style="dislay: none;">' + DatosJson["dni"]  + '</td>'+ '</tr>');
+        $("#table").append('<tr><th><h3>Email:</h3></th>' +'<td style="dislay: none;">' + DatosJson["email"]  + '</td>'+ '</tr>');
+    }
+
+    fetch('{% url 'api-user' %}',{
+        method: 'GET',
+        headers: {
+            "Authorization": "Token " + getCookie("token")
+        }
+    }).then(r =>  r.json().then(data => ({status: r.status, response: data}))).then(json_response => {
+        console.log(json_response)
+        if (json_response['status'] != 200) {
+            location.href = "{% url 'login' %}";
+        } else {
+            load_data(json_response["response"])
+        }
+    })
+
+
     document.getElementById("boton_logout").onclick = e => {
     e.preventDefault();
     fetch('{% url 'api-logout' %}',{
@@ -79,10 +77,8 @@
         }
     }).then(r =>  r.text().then(data => ({status: r.status, response: data}))).then(json_response => {
         console.log(json_response);
-        if (json_response['status'] != 204) {
-            document.getElementById("error-handling").style.display = "block";
-        } else {
-            document.getElementById("error-handling").style.display = "none";
+        if (json_response['status'] == 204) {
+            setCookie("token",null,0)
             location.href = "{% url 'user-index' %}";
         }
     })
@@ -99,19 +95,12 @@
         }
     }).then(r =>  r.text().then(data => ({status: r.status, response: data}))).then(json_response => {
         console.log(json_response);
-        if (json_response['status'] != 204) {
-            document.getElementById("error-handling").style.display = "block";
-        } else {
-            document.getElementById("error-handling").style.display = "none";
+        if (json_response['status'] == 204) {
+            setCookie("token",null,0)
             location.href = "{% url 'user-index' %}";
         }
     })
     }
-	*/
-
-
 </script>
 
-
-</body>
 </html>

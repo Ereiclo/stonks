@@ -3,11 +3,6 @@ from django.views import View
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
-# Create your views here.
-"""
-def index(request):
-    return HttpResponse("Demo: Stonks - Stocks App")
-"""
 
 class IndexView(View):
     template_name = "stocks/index.html"
@@ -35,7 +30,7 @@ class AccountView(View):
     def get(self, request, *args, **kwargs):
         return render(request,self.template_name)
 
-class UpdateView(APIView):
+class UpdateView(View):
     template_name = "stocks/update.html"
 
     def get(self, request, *args, **kwargs):

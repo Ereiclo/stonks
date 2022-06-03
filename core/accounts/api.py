@@ -34,10 +34,9 @@ class LoginAPI(KnoxLoginView):
         return super(LoginAPI, self).post(request, format=None)
 
 
-# DEMO
-class MainUser(generics.RetrieveAPIView):
+class UserDetailsAPI(generics.RetrieveAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
         return self.request.user
- 
+
