@@ -40,10 +40,14 @@ class Order(models.Model):
 
 
 class IncompleteOrder(models.Model):
-    order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
-    status = models.CharField(max_length=1)
+    class OrderStatus(models.TextChoices):
+        PENDING = 'P', _('Pending')
+        CANCELLED = 'C', _('CANCELLED')
+
+    order_id = models.OneToOneField(Order, on_delete=models.CASCADE, primary_key=True)
+    status = models.CharField(max_length=1, choices=OrderStatus.choices)
 
 
 class CompleteOrder(models.Model):
-    order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order_id = models.OneToOneField(Order, on_delete=models.CASCADE, primary_key=True)
     price_per_stock = models.DecimalField(max_digits=7, decimal_places=2)

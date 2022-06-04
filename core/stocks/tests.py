@@ -112,7 +112,7 @@ class StocksTests(APITestCase):
 
         # Urls
         self.portafolio_url = reverse('api-portafolio')
-        self.orders_by_company_url = reverse('api-order-by-company', args=[test_company, ])
+        self.orders_by_company_url = reverse('api-orders-by-company', args=[test_company, ])
 
         # Generate Database
         self.token_user1 = self.utility_generate_user_data_and_token(self.user1_data)

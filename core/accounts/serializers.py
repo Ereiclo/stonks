@@ -3,28 +3,36 @@ from rest_framework import serializers
 from .models import Client
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserDetailsSerializer(serializers.ModelSerializer):
+    """
+    Serializer for non confidential data from User
+    """
     class Meta:
         model = Client
         fields = ('dni', 'names', 'lastname', 'email')
         extra_kwargs = {'dni': {'read_only': True}}
 
-class UpdateSerializer(serializers.ModelSerializer):
+
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    """
+    Serializer to update user password
+    """
     class Meta:
         model = Client
-        fields = ('dni', 'names', 'lastname', 'email','password')
-        extra_kwargs = {'password': {'write_only': True,'required':False},
-                        'dni': {'write_only':True}}
-    def update(self,instance, validated_data):
-        if 'password' in validated_data:
-            password = validated_data.pop('password')  
-            instance.set_password(password)
-        return super().update(instance,validated_data)
-            
+        fields = ('password', )
+        extra_kwargs = {'password': {'write_only': True}, }
 
+    def update(self, instance, validated_data):
+        if 'password' in validated_data:
+            password = validated_data.pop('password')
+            instance.set_password(password)
+        return super().update(instance, validated_data)
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+    """
+    Serializer to register new user
+    """
     class Meta:
         model = Client
         fields = ('dni', 'names', 'lastname', 'email', 'password')
