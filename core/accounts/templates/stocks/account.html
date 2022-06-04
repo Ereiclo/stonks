@@ -12,9 +12,9 @@
 	<nav>
 	<div class="logo"><img src="{%static 'stocks/images/st.png' %}" width="180" height="80"></div>
 	    <div class="barnav">
-	    <div><h3>Perfil</h3></div>
-	    <div><h3>Portafolio</h3></div>
-	    <div id="comprar-div" ><h3>Comprar</h3></div>
+	    <div id="barnav-perfil"><h3>Perfil</h3></div>
+	    <div id="barnav-portafolio"><h3>Portafolio</h3></div>
+	    <div id="barnav-comprar"><h3>Comprar</h3></div>
 	</div>
 	</nav>	
 	
@@ -43,6 +43,15 @@
 <script src="{% static '/js/cookie_manager.js' %}" type="text/javascript"></script>
 
 <script>
+    document.getElementById("barnav-perfil").onclick = e => {
+        e.preventDefault();
+        location.href = '{% url 'user' %}';
+    }
+        document.getElementById("barnav-portafolio").onclick = e => {
+        e.preventDefault();
+        location.href = '{% url 'portfolio' %}';
+    }
+
     function load_data(DatosJson){
         console.log(DatosJson);
         $("#table").append('<tr><th><h3>Nombre:</h3></th>'+'<td  style="dislay: none;">' + DatosJson["names"]  + '</td>'+ '</tr>');
