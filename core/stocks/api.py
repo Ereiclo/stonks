@@ -8,6 +8,9 @@ from .models import Portfolio, Order, Company, CompleteOrder, IncompleteOrder
 
 
 class UserPortfolioAPI(generics.ListAPIView):
+    """
+    List of User's Portafolio
+    """
     serializer_class = DetailedPortfolioSerializer
 
     def get_queryset(self):
@@ -16,6 +19,9 @@ class UserPortfolioAPI(generics.ListAPIView):
 
 
 class UserOrdersAPI(generics.ListAPIView):
+    """
+    List of User's Orders
+    """
     serializer_class = DetailedOrderSerializer
 
     def get_queryset(self):
@@ -24,6 +30,9 @@ class UserOrdersAPI(generics.ListAPIView):
 
 
 class UserOrdersByCompanyAPI(generics.ListAPIView):
+    """
+    List of User's Orders filtered by Company
+    """
     serializer_class = DetailedOrderSerializer
 
     def get_queryset(self):
@@ -33,6 +42,9 @@ class UserOrdersByCompanyAPI(generics.ListAPIView):
 
 
 class NewOrderAPI(generics.GenericAPIView):
+    """
+    Create New Order for current User
+    """
     serializer_class = BasicOrderSerializer
 
     def post(self, request, *args, **kwargs):
