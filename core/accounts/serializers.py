@@ -7,6 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = ('dni', 'names', 'lastname', 'email')
+        extra_kwargs = {'dni': {'read_only': True}}
 
 
 class RegisterSerializer(serializers.ModelSerializer):
