@@ -50,8 +50,12 @@
 			if (json_response['status'] != 200) {
 				document.getElementById("error-handling").style.display = "block";
 			} else {
-				document.getElementById("error-handling").style.display = "none";
-				location.href = "{% url 'user' %}";
+
+			console.log(json_response['response']['token'])
+            document.getElementById("error-handling").style.display = "none";
+            setCookie("token",json_response['response']['token'],1)
+            location.href = "{% url 'user' %}"
+
 			}
 
 
