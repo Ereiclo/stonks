@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<title>Formulario de registro</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'stocks/style.css' %}">
+</head>
+<body>
+        <nav>
+<div class="logo"><img src="{% static 'stocks/images/st.png' %}" width="180" height="80"></div>
+    <div class="barnav">
+    <div id="barnav-perfil"><h3>Perfil</h3></div>
+    <div id="barnav-portafolio"><h3>Portafolio</h3></div>
+    <div id="barnav-comprar"><h3>Comprar</h3></div>
+</div>
+</nav>
+
+    <form class="form-register" id = "form">
+        <center><h4>Fomulario de actualización</h4></center>
+
+		<label for="name">Nombre:</label>
+		<input class="controls" type="text" name="name" id="name" placeholder="Ingrese su nombre">
+		<label for="lastname">Apellidos:</label>
+		<input class="controls" type="text" name="lastname" id="lastname" placeholder="Ingrese sus apellidos">
+		<label for="email">Email:</label>
+		<input class="controls" type="text" name="email" id="email" placeholder="Ingrese su email">
+		<label for="password">Contraseña actual:</label>
+		<input class="controls" type="text" name="password" id="password" placeholder="Ingrese su password">
+		<label for="password">Contraseña nueva:</label>
+		<input class="controls" type="text" name="password" id="password" placeholder="Ingrese su password">
+		<input class="boton_update" type="submit" value="Actualizar" >
+
+    </form>
+</body>
+<script>
+    document.getElementById("barnav-perfil").onclick = e => {
+        e.preventDefault();
+        location.href = '{% url 'user' %}';
+    }
+        document.getElementById("barnav-portafolio").onclick = e => {
+        e.preventDefault();
+        location.href = '{% url 'portfolio' %}';
+    }
+
+</script>
+</html>

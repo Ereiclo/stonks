@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders', # Extenral API communication
     'rest_framework',  # Rest Framework
     'knox',  # Auth framework
     'stocks',
@@ -49,7 +50,25 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # CORS
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+
+"""
+CORS ALLOWED DOMAINS
+--------------------
+Alternatives: CORS_ALLOWD_ORIGINS, CORS_ORIGIN_REGEX_WHITELIST.
+
+For more details, visit: https://pypi.org/project/django-cors-headers/
+""" 
+
+CORS_ORIGIN_WHITELIST = (
+    'http://stonks-utec.com',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+)
 
 ROOT_URLCONF = 'core.urls'
 
@@ -129,6 +148,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
 }
+
+
 
 AUTH_USER_MODEL = "accounts.Client"

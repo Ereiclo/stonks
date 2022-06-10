@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<head>
+
+	<title>Account</title>
+	<link rel="stylesheet" type="text/css" href="{%static 'stocks/style.css' %}">
+</head>
+<body>
+	<nav>
+	<div class="logo"><img src="{%static 'stocks/images/st.png'%}" width="180" height="80"></div>
+	    <div class="barnav">
+	    <div id="barnav-perfil"><h3>Perfil</h3></div>
+	    <div id="barnav-portafolio"><h3>Portafolio</h3></div>
+	    <div id="barnav-comprar"><h3>Comprar</h3></div>
+	</div>
+	</nav>	
+	
+   <center><div class="port2">
+    	<div class="user">
+		<center><h2>Usuario</h2></center>		
+		
+        <img src="{% static 'stocks/images/maxresdefault.jpg' %}" width="200" height="200">
+   		</div> 
+		
+		<div class="t">
+			<center><h2>Datos</h2></center>
+			<center><table  width="800" id="table" ></table></center>
+		</div>
+		
+		<form class="fr">
+		
+		<input  id="boton_logout" class="boton_logout" type="submit" value="Logout" >
+		<input  id="boton_logout_all" class="boton_logout_all" type="submit" value="Logout all" >
+		<input  id="boton_update" class="boton_update" type="submit" value="Update" >
+
+		</form>
+	</div></center>
+</body>
+
+<script src="{% static '/js/cookie_manager.js' %}" type="text/javascript"></script>
+
+<script>
+    document.getElementById("barnav-perfil").onclick = e => {
+        e.preventDefault();
+        location.href = '{% url 'user' %}';
+    }
+        document.getElementById("barnav-portafolio").onclick = e => {
+        e.preventDefault();
+        location.href = '{% url 'portfolio' %}';
+    }
+
+    function load_data(DatosJson){
+        console.log(DatosJson);
+        $("#table").append('<tr><th><h3>Nombre:</h3></th>'+'<td  style="dislay: none;">' + DatosJson["names"]  + '</td>'+ '</tr>');
+        $("#table").append('<tr><th><h3>Apellidos:</h3></th>'+ '<td style="dislay: none;">' + DatosJson["lastname"]  + '</td>'+ '</tr>');
+        $("#table").append('<tr><th><h3>DNI:</h3></th>'+'<td style="dislay: none;">' + DatosJson["dni"]  + '</td>'+ '</tr>');
+        $("#table").append('<tr><th><h3>Email:</h3></th>' +'<td style="dislay: none;">' + DatosJson["email"]  + '</td>'+ '</tr>');
+    }
+
+    fetch('{% url 'api-user' %}',{
+        method: 'GET',
+        headers: {
+            "Authorization": "Token " + getCookie("token")
+        }
+    }).then(r =>  r.json().then(data => ({status: r.status, response: data}))).then(json_response => {
+        console.log(json_response)
+        if (json_response['status'] != 200) {
+            location.href = "{% url 'login' %}";
+        } else {
+            load_data(json_response["response"])
+        }
+    })
+
+
+    document.getElementById("boton_logout").onclick = e => {
+    e.preventDefault();
+    fetch('{% url 'api-logout' %}',{
+        method: 'POST',
+        body: JSON.stringify({}),
+        headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Token " + getCookie("token")
+        }
+    }).then(r =>  r.text().then(data => ({status: r.status, response: data}))).then(json_response => {
+        console.log(json_response);
+        if (json_response['status'] == 204) {
+            setCookie("token",null,0)
+            location.href = "{% url 'user-index' %}";
+        }
+    })
+    }
+
+    document.getElementById("boton_logout_all").onclick = e => {
+    e.preventDefault();
+    fetch('{% url 'api-logoutall' %}',{
+        method: 'POST',
+        body: JSON.stringify({}),
+        headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Token " + getCookie("token")
+        }
+    }).then(r =>  r.text().then(data => ({status: r.status, response: data}))).then(json_response => {
+        console.log(json_response);
+        if (json_response['status'] == 204) {
+            setCookie("token",null,0)
+            location.href = "{% url 'user-index' %}";
+        }
+    })
+    }
+</script>
+
+</html>
