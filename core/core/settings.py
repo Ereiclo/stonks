@@ -62,11 +62,12 @@ CORS ALLOWED DOMAINS
 Alternatives: CORS_ALLOWD_ORIGINS, CORS_ORIGIN_REGEX_WHITELIST.
 
 For more details, visit: https://pypi.org/project/django-cors-headers/
-"""
+""" 
+
 CORS_ORIGIN_WHITELIST = (
-    'stonks-utec.com',
-    'localhost:3000',
-    '127.0.0.1:3000'
+    'http://stonks-utec.com',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
 )
 
 ROOT_URLCONF = 'core.urls'
