@@ -81,10 +81,7 @@ DATABASES = {
         'PORT': 5432,
         'NAME': 'db_stonks',
         'USER': 'postgres',
-        'OPTIONS': {
-            # Password File - Must contain credentials for NAME, test_NAME and postgres databases
-            'passfile': '.pgpass',
-        },
+        'PASSWORD': 'utec',
     }
 }
 
