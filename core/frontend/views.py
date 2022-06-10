@@ -41,7 +41,7 @@ class UpdateView(View):
 
 
 class PortfolioView(View):
-    template_name = "accounts/portfolio.html"
+    template_name = "stocks/portfolio.html"
 
     def get(self, request, *args, **kwargs):
         return render(request,self.template_name)

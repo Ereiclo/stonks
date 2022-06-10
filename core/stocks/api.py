@@ -2,14 +2,13 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from .serializers import DetailedPortfolioSerializer, DetailedOrderSerializer, \
-    DetailedCompleteOrderSerializer, DetailedIncompleteOrderSerializer, \
     BasicOrderSerializer
 from .models import Portfolio, Order, Company, CompleteOrder, IncompleteOrder
-
+from .exception import UserNotEnoughMoney
 
 class UserPortfolioAPI(generics.ListAPIView):
     """
-    List of User's Portafolio
+    List of User's Portfolio
     """
     serializer_class = DetailedPortfolioSerializer
 
@@ -54,11 +53,14 @@ class NewOrderAPI(generics.GenericAPIView):
         # Validate and create order
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
+        # Check if user has enough money
+        if self.request.user.money < data["price"] * data["quantity"]:
+            raise UserNotEnoughMoney()
         order = serializer.save()
         # Create associated incomplete order
-        incomplete_order = IncompleteOrder.objects.create(order, IncompleteOrder.OrderStatus.PENDING)
-        response = DetailedIncompleteOrderSerializer(incomplete_order)
-        # Return incomplete order serialized data
+        IncompleteOrder.objects.create(order_id=order, status=IncompleteOrder.OrderStatus.PENDING)
+        # Return detailed order serialized data
+        response = DetailedOrderSerializer(order)
         return Response(response.data)
 
 

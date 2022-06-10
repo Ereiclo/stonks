@@ -30,7 +30,8 @@ class BasicCompleteOrderSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = CompleteOrder
-        fields = ('price_per_stock', )
+        fields = ('price_per_stock', 'order_id', )
+        extra_kwargs = {'order_id': {'write_only': True}, }
 
 
 class BasicIncompleteOrderSerializer(serializers.ModelSerializer):
@@ -39,42 +40,20 @@ class BasicIncompleteOrderSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = IncompleteOrder
-        fields = ('status', 'order',)
+        fields = ('status', 'order_id',)
+        extra_kwargs = {'order_id': {'write_only': True}, }
 
 
 class BasicOrderSerializer(serializers.ModelSerializer):
     """
-    Basic serializer for Incomplete Order
+    Basic serializer for Complete Order
     """
-    company_ruc = BasicCompanySerializer(many=False, read_only=True)
-
     class Meta:
         model = Order
         fields = ('client_dni', 'company_ruc', 'quantity', 'price',
                   'transaction_type',)
-        extra_kwargs = {'client_dni': {'write_only': True}, }
-
-
-class DetailedCompleteOrderSerializer(serializers.ModelSerializer):
-    """
-    Detailed serializer for Complete Order
-    """
-    order = BasicOrderSerializer(many=False, read_only=True)
-
-    class Meta:
-        model = CompleteOrder
-        fields = ('price_per_stock', 'order', )
-
-
-class DetailedIncompleteOrderSerializer(serializers.ModelSerializer):
-    """
-    Detailed serializer for Incomplete Order
-    """
-    order = BasicOrderSerializer(many=False, read_only=True)
-
-    class Meta:
-        model = IncompleteOrder
-        fields = ('status', 'order', )
+        extra_kwargs = {'client_dni': {'write_only': True},
+                        'company_ruc': {'write_only': True}, }
 
 
 class DetailedOrderSerializer(serializers.ModelSerializer):
@@ -89,6 +68,5 @@ class DetailedOrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = ('client_dni', 'company_ruc', 'quantity', 'price',
                   'transaction_type', 'incompleteorder', 'completeorder')
-
-
+        extra_kwargs = {'client_dni': {'write_only': True}, }
 
