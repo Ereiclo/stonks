@@ -52,8 +52,7 @@ class BasicOrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = ('client_dni', 'company_ruc', 'quantity', 'price',
                   'transaction_type',)
-        extra_kwargs = {'client_dni': {'write_only': True},
-                        'company_ruc': {'write_only': True}, }
+        extra_kwargs = {'client_dni': {'write_only': True},}
 
 
 class DetailedOrderSerializer(serializers.ModelSerializer):
