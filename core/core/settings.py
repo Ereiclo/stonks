@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'knox',  # Auth framework
     'stocks',
     'accounts',
+    'frontend',
 ]
 
 MIDDLEWARE = [
