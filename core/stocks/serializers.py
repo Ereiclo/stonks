@@ -10,7 +10,7 @@ class BasicCompanySerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Company
-        fields = ('company_name', 'acronym', 'lastest_price', )
+        fields = ('ruc', 'company_name', 'acronym', 'lastest_price', )
 
 
 class DetailedPortfolioSerializer(serializers.ModelSerializer):

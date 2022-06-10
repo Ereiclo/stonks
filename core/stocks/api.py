@@ -2,9 +2,10 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from .serializers import DetailedPortfolioSerializer, DetailedOrderSerializer, \
-    BasicOrderSerializer
+    BasicOrderSerializer, BasicCompanySerializer
 from .models import Portfolio, Order, Company, CompleteOrder, IncompleteOrder
 from .exception import UserNotEnoughMoney
+
 
 class UserPortfolioAPI(generics.ListAPIView):
     """
@@ -50,6 +51,7 @@ class NewOrderAPI(generics.GenericAPIView):
         # Preprocess input
         data = request.data
         data["client_dni"] = self.request.user.dni
+
         # Validate and create order
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
@@ -64,6 +66,14 @@ class NewOrderAPI(generics.GenericAPIView):
         return Response(response.data)
 
 
+class CompaniesAPI(generics.ListAPIView):
+    """
+    List of Companies
+    """
+    permission_classes = (permissions.AllowAny,)
+
+    serializer_class = BasicCompanySerializer
+    queryset = Company.objects.all()
 
 
 

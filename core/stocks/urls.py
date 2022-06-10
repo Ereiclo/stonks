@@ -6,4 +6,5 @@ urlpatterns = [
     path('orders/', api.UserOrdersAPI.as_view(), name="api-orders"),
     path('orders/<str:company>/', api.UserOrdersByCompanyAPI.as_view(), name="api-orders-by-company"),
     path('new-order/', api.NewOrderAPI.as_view(), name="api-new-order"),
+    path('companies/', api.CompaniesAPI.as_view(), name="api-companies"),
 ]

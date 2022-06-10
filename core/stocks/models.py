@@ -42,7 +42,7 @@ class Order(models.Model):
 class IncompleteOrder(models.Model):
     class OrderStatus(models.TextChoices):
         PENDING = 'P', _('Pending')
-        CANCELLED = 'C', _('CANCELLED')
+        CANCELLED = 'C', _('Cancelled')
 
     order_id = models.OneToOneField(Order, on_delete=models.CASCADE, primary_key=True)
     status = models.CharField(max_length=1, choices=OrderStatus.choices)
