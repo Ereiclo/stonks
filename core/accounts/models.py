@@ -4,12 +4,13 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.core.validators import RegexValidator
 
 dni_validator = RegexValidator(r'[0-9]{8}', 'DNI Inválido')
+starting_money = 100000
 
 
 class UserProfileManager(BaseUserManager):
 
     def create_user(self, dni, names, lastname, email, password):
-        user = self.model(dni=dni, names=names, lastname=lastname, email=email)
+        user = self.model(dni=dni, names=names, lastname=lastname, email=email, money=starting_money)
         user.set_password(password)
         user.save()
         return user
@@ -28,6 +29,7 @@ class Client(AbstractBaseUser, PermissionsMixin):
     names = models.CharField(max_length=80)
     lastname = models.CharField(max_length=120)
     email = models.EmailField(unique=True)
+    money = models.DecimalField(max_digits=12, decimal_places=2)
 
     objects = UserProfileManager()
 
@@ -36,6 +38,9 @@ class Client(AbstractBaseUser, PermissionsMixin):
 
     def get_id(self):
         return self.dni
+
+    def reset_money(self):
+        self.money = starting_money
 
     def __str__(self):
         return f"(Dni: {self.dni}, Names {self.names})"
