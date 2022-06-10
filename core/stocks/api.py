@@ -56,7 +56,7 @@ class NewOrderAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         # Check if user has enough money
-        if self.request.user.money < data["price"] * data["quantity"]:
+        if self.request.user.money < float(data["price"]) * float(data["quantity"]):
             raise UserNotEnoughMoney()
         order = serializer.save()
         # Create associated incomplete order
