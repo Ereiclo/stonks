@@ -1,20 +1,15 @@
-body{
-    background-image: url('images/s.jpg');
-    background-size:100% 100%;
-    background-attachment: fixed;
-
-}
-
 
 body{
-	background-image: url('images/s.jpg');
+	background-image: url('images/b.jpg');
 	background-size:100% 100%;
-    background-attachment: fixed;
+	background-attachment: fixed;
+    
 }
 
 .form-register{
 	width: 400px;
 	background: #24303c;
+	opacity:0.97;
 	padding: 30px;
 	margin: auto;
 	margin-top: 100px;
@@ -70,6 +65,7 @@ body{
 .port2{
 
 	width: 1200px;
+	opacity:0.9;
 
 	background: #24303c;
 	/*
@@ -255,8 +251,6 @@ nav{
     display:grid;
     grid-template-columns: 1fr auto;
     align-items: center;
-    	position: absolute;
-
     background: black;
     font-family: sans-serif;
     position:fixed;
@@ -287,4 +281,3 @@ nav .barnav div:hover{
 .contenido{
     height: 1100px;
 }
-

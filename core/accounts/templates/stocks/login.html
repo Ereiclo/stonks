@@ -4,36 +4,36 @@
 
 <head>
 
-	<title>Stonks</title>
-	<link rel="stylesheet" type="text/css" href="{%static 'stocks/style.css' %}">
+	<title>Login</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'stocks/style.css' %}">
 </head>
 <body>
-		
+        
 
-	<form class="form-register" id = "form">
-		<center><h4>Iniciar Sesión</h4></center>
-		<p id="error-handling" style="display: none;">Credenciales inválidas</p>
-		<label for="username">Dni:
-		<input class="controls" type="text" name="username" id="username" placeholder="Ingrese su dni">
-		<label for="password">Contraseña:
-		<input class="controls" type="password" name="password" id="password" placeholder="Ingrese su contraseña">
-		
+    <form class="form-register" id = "form">
+        <center><h4>Login</h4></center>
+        <p id="error-handling" style="display: none;">Login invalido</p>
+        <p id="error-handling1" style="display: none;">Login valido</p>
+        <label for="username"> Username:</label>
+        <input class="controls" type="text" name="username" id="username" placeholder="Ingrese su username">
+        <label for="password">Password:</label>
+        <input class="controls" type="password" name="password" id="password" placeholder="Ingrese su password">
+        
+        <input id="login_button" class="boton2" type="submit" value="Login" >
 
-		<input class="boton2" type="submit" value="Iniciar sesión" >
-	</form>
-    <div class="div-register" >
-        <input id="redirect-register" class="boton2" type="submit" value="Registrarse" >
-    </div>
+    </form>
 
+  
 </body>
+
 
     <script src="{% static '/js/cookie_manager.js' %}" type="text/javascript"></script>
 
     <script>
-    document.getElementById("redirect-register").onclick = e => {
-        e.preventDefault();
-        location.href = '{% url 'register' %}';
-    }
+    // document.getElementById("login_button").onclick = e => {
+    //     e.preventDefault();
+    //     location.href = '{% url 'register' %}';
+    // }
 	document.getElementById("form").onsubmit = e => {
 	    e.preventDefault();
 	    fetch('{% url 'api-login' %}',{
@@ -49,12 +49,14 @@
 			console.log(json_response)
 			if (json_response['status'] != 200) {
 				document.getElementById("error-handling").style.display = "block";
+				document.getElementById("error-handling1").style.display = "none";
 			} else {
 
 			console.log(json_response['response']['token'])
-            document.getElementById("error-handling").style.display = "none";
+            document.getElementById("error-handling1").style.display = "block";
+			document.getElementById("error-handling").style.display = "none";
             setCookie("token",json_response['response']['token'],1)
-            location.href = "{% url 'user' %}"
+            // location.href = "{% url 'user' %}"
 
 			}
 
@@ -62,6 +64,5 @@
 	    })
 	}
     </script>
-
 
 </html>
