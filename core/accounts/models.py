@@ -36,6 +36,9 @@ class Client(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'dni'
     REQUIRED_FIELDS = ['names', 'lastname', 'email']
 
+    def is_staff(self):
+        return self.is_superuser
+
     def get_id(self):
         return self.dni
 
