@@ -36,6 +36,7 @@
     // }
 	document.getElementById("form").onsubmit = e => {
 	    e.preventDefault();
+		console.log("aqui")
 	    fetch('{% url 'api-login' %}',{
 		method: 'POST',
 		body: JSON.stringify({
