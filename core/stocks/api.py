@@ -3,8 +3,9 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from .serializers import DetailedPortfolioSerializer, DetailedOrderSerializer, \
     BasicOrderSerializer, BasicCompanySerializer
-from .models import Portfolio, Order, Company, CompleteOrder, IncompleteOrder
-from .exception import UserNotEnoughMoney
+from .models import Portfolio, Order, Company, IncompleteOrder
+from .exception import UserNotEnoughMoney, UserNotEnoughStocks, UnexpectedOrderError
+import decimal
 
 
 class UserPortfolioAPI(generics.ListAPIView):
@@ -55,11 +56,37 @@ class NewOrderAPI(generics.GenericAPIView):
         # Validate and create order
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
-        # Check if user has enough money
-        if self.request.user.money < float(data["price"]) * float(data["quantity"]):
-            raise UserNotEnoughMoney()
+
+        # Buy & Sell Validation Logic
+        order_type = Order.TransactionType(serializer.validated_data["transaction_type"])
+        user_money = decimal.Decimal(self.request.user.money)
+
+        # Buy order
+        if order_type.is_buy():
+            # Check if user has enough money
+            total_price = decimal.Decimal(serializer.validated_data["price"]) \
+                          * decimal.Decimal(serializer.validated_data["quantity"])
+            if user_money < total_price:
+                raise UserNotEnoughMoney()
+
+        # Sell order
+        elif order_type.is_sell():
+            # Check if user has enough stocks
+            total_stocks = decimal.Decimal(
+                get_object_or_404(Portfolio,
+                                  client_dni=self.request.user.dni,
+                                  company_ruc=serializer.validated_data["company_ruc"]).quantity
+            )
+            if total_stocks < serializer.validated_data["quantity"]:
+                raise UserNotEnoughStocks()
+
+        # Error
+        else:
+            raise UnexpectedOrderError()
+
+        # Update DataBase
+        # Create order & associated incomplete order
         order = serializer.save()
-        # Create associated incomplete order
         IncompleteOrder.objects.create(order_id=order, status=IncompleteOrder.OrderStatus.PENDING)
         # Return detailed order serialized data
         response = DetailedOrderSerializer(order)
@@ -74,6 +101,3 @@ class CompaniesAPI(generics.ListAPIView):
 
     serializer_class = BasicCompanySerializer
     queryset = Company.objects.all()
-
-
-

@@ -32,6 +32,21 @@ class Order(models.Model):
         SELL_LIMIT = 'SL', _('Sell Limit')
         SELL_STOP = 'SS', _('Sell Stop')
 
+        def is_buy(self):
+            return str(self)[0] == 'B'
+
+        def is_sell(self):
+            return str(self)[0] == 'S'
+
+        def is_market_order(self):
+            return str(self)[1] == 'M'
+
+        def is_limit_order(self):
+            return str(self)[1] == 'L'
+
+        def is_stop_order(self):
+            return str(self)[1] == 'S'
+
     client_dni = models.ForeignKey(Client, on_delete=models.CASCADE)
     company_ruc = models.ForeignKey(Company, on_delete=models.CASCADE)
     quantity = models.IntegerField()
