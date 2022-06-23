@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import Client
 from django.utils.translation import gettext_lazy as _
+from datetime import datetime,date
 from django.core.validators import RegexValidator
 
 acronym_validator = RegexValidator(r'[A-Z]{1,12}', 'Acrónimo inválido')
@@ -18,6 +19,7 @@ class Portfolio(models.Model):
     client_dni = models.ForeignKey(Client, on_delete=models.CASCADE)
     company_ruc = models.ForeignKey(Company, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+    avg_price = models.DecimalField(max_digits=7, decimal_places=2,default=0)
 
     class Meta:
         unique_together = ('client_dni', 'company_ruc')
@@ -52,6 +54,10 @@ class Order(models.Model):
     quantity = models.IntegerField()
     price = models.DecimalField(max_digits=7, decimal_places=2)
     transaction_type = models.CharField(max_length=2, choices=TransactionType.choices)
+    avg_price = models.DecimalField(max_digits=7, decimal_places=2,default=0)
+    quantity_left = models.IntegerField(default=0)
+    date = models.DateTimeField(default=datetime.now())
+
 
 
 class IncompleteOrder(models.Model):
@@ -65,4 +71,3 @@ class IncompleteOrder(models.Model):
 
 class CompleteOrder(models.Model):
     order_id = models.OneToOneField(Order, on_delete=models.CASCADE, primary_key=True)
-    price_per_stock = models.DecimalField(max_digits=7, decimal_places=2)
