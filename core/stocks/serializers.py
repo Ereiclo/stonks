@@ -30,7 +30,7 @@ class BasicCompleteOrderSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = CompleteOrder
-        fields = ('price_per_stock', 'order_id', )
+        fields = ( 'order_id', )
         extra_kwargs = {'order_id': {'write_only': True}, }
 
 
@@ -44,6 +44,9 @@ class BasicIncompleteOrderSerializer(serializers.ModelSerializer):
         extra_kwargs = {'order_id': {'write_only': True}, }
 
 
+
+
+
 class BasicOrderSerializer(serializers.ModelSerializer):
     """
     Basic serializer for Complete Order
@@ -53,6 +56,20 @@ class BasicOrderSerializer(serializers.ModelSerializer):
         fields = ('client_dni', 'company_ruc', 'quantity', 'price',
                   'transaction_type',)
         extra_kwargs = {'client_dni': {'write_only': True},}
+
+
+
+
+class CompletedOrderSerializer(serializers.ModelSerializer):
+    """
+    Data serializer for Order
+    """
+
+    order_id= BasicOrderSerializer(many=False, read_only=True)
+    class Meta:
+        model = CompleteOrder
+        fields = ('order_id',)
+        extra_kwargs = {'client_dni':{'write_only':True},}
 
 
 class DetailedOrderSerializer(serializers.ModelSerializer):
