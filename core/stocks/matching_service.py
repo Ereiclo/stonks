@@ -22,25 +22,23 @@ def matching_service_buy(order,relevant_orders):
         if buyer.money < quantity_sold * price:
             break
 
-
-        # print(quantity_sold)
-        # print(current_order.quantity_left,"\n\n\n\n")
-        # print(current_order.quantity,"\n\n\n\n")
-        # prev_quantity_sold = curre
         current_total_sold = (current_order.quantity - current_order.quantity_left) * current_order.avg_price
         current_total_sold += quantity_sold * price
 
-        # print(current_total_sold,"\n\n\n\n")
-        # print(current_order.quantity_left,"\n\n\n\n")
-        # print(current_order.quantity,"\n\n\n\n")
+        seller_total_sold = seller_portfolio.quantity * seller_portfolio.avg_price
+        buyer_total_sold = buyer_portfolio.quantity * buyer_portfolio.avg_price
+
         current_order.quantity_left -= quantity_sold
         seller_portfolio.quantity -= quantity_sold
         buyer_portfolio.quantity += quantity_sold
         order.quantity_left -= quantity_sold
-        # print(current_order.quantity_left,"\n\n\n\n")
+
         current_order.avg_price = current_total_sold / (current_order.quantity - current_order.quantity_left)
 
-
+        seller_total_sold -= quantity_sold * price
+        seller_portfolio.avg_price = seller_total_sold / seller_portfolio.quantity
+        buyer_total_sold += quantity_sold * price
+        buyer_portfolio.avg_price = buyer_total_sold / buyer_portfolio.quantity
 
         buyer.money -= quantity_sold * price
         seller.money += quantity_sold * price
