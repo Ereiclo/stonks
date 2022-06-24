@@ -22,19 +22,22 @@ def matching_service_buy(order,relevant_orders):
         if buyer.money < quantity_sold * price:
             break
 
-
-        
         current_total_sold = (current_order.quantity - current_order.quantity_left) * current_order.avg_price
         current_total_sold += quantity_sold * price
 
-        
+        seller_total_sold = seller_portfolio.quantity * seller_portfolio.avg_price
+        buyer_total_sold = buyer_portfolio.quantity * buyer_portfolio.avg_price
+
         current_order.quantity_left -= quantity_sold
         seller_portfolio.quantity -= quantity_sold
         buyer_portfolio.quantity += quantity_sold
         order.quantity_left -= quantity_sold
         current_order.avg_price = current_total_sold / (current_order.quantity - current_order.quantity_left)
 
-
+        seller_total_sold -= quantity_sold * price
+        seller_portfolio.avg_price = seller_total_sold / seller_portfolio.quantity
+        buyer_total_sold += quantity_sold * price
+        buyer_portfolio.avg_price = buyer_total_sold / buyer_portfolio.quantity
 
         buyer.money -= quantity_sold * price
         seller.money += quantity_sold * price
