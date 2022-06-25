@@ -81,7 +81,7 @@ def matching_service_buy(order,relevant_orders):
 
 
 
-#venta
+#ventas
 def matching_service_sell(order,relevant_orders):
     seller = order.client_dni
     total_bought = 0
