@@ -54,7 +54,7 @@ def matching_service_buy(order,relevant_orders):
         
 
         if seller_portfolio.quantity != 0:
-            seller_portfolio.avg_price = seller_total_sold / seller_portfolio.quantity
+            # seller_portfolio.avg_price = seller_total_sold / seller_portfolio.quantity
             seller_portfolio.save()
         else:
             seller_portfolio.delete()
@@ -132,7 +132,6 @@ def matching_service_sell(order,relevant_orders):
         
 
         if seller_portfolio.quantity != 0:
-            seller_portfolio.avg_price = seller_total_sold / seller_portfolio.quantity
             seller_portfolio.save()
         else:
             seller_portfolio.delete()
