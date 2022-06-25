@@ -36,6 +36,7 @@ def matching_service_buy(order,relevant_orders):
         buyer_portfolio.quantity += quantity_sold
         order.quantity_left -= quantity_sold
         current_order.avg_price = current_total_sold / (current_order.quantity - current_order.quantity_left)
+        # print(order.quantity_left,quantity_sold,"\n\n\n\n\n")
 
         seller_total_sold -= quantity_sold * price
         buyer_total_sold += quantity_sold * price
