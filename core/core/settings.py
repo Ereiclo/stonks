@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+import environ
 from pathlib import Path
-
+env = environ.Env()
+environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,7 +26,9 @@ SECRET_KEY = 'django-insecure-a&d*h4z6-yue@32i8#d_3^nd#_9h)z$u74_b+l-of64v*s+9l4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "*"
+]
 
 # Application definition
 
@@ -64,12 +68,12 @@ Alternatives: CORS_ALLOWD_ORIGINS, CORS_ORIGIN_REGEX_WHITELIST.
 
 For more details, visit: https://pypi.org/project/django-cors-headers/
 """ 
-
-CORS_ORIGIN_WHITELIST = (
-    'http://stonks-utec.com',
-    'http://localhost:3000',
-    'http://127.0.0.1:3000'
-)
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:3000',
+#     'http://127.0.0.1:3000',
+#     'https://62be3f2702ba4b0a31f6ae1c--ephemeral-kelpie-a9d0f0.netlify.app',
+# )
 
 ROOT_URLCONF = 'core.urls'
 
@@ -97,11 +101,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'localhost',
-        'PORT': 5432,
-        'NAME': 'db_stonks',
-        'USER': 'postgres',
-        'PASSWORD': 'utec',
+        'HOST': env('DATABASE_HOSTNAME'),
+        'PORT': env('DATABASE_PORT'),
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASS'),
     }
 }
 
