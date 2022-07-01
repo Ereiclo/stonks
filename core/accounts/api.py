@@ -49,6 +49,19 @@ class UserDetailsAPI(generics.RetrieveUpdateAPIView):
         return self.request.user
 
 
+
+class ChangeUserDataAPI(generics.UpdateAPIView):
+    """
+    Change user password
+    """
+    serializer_class = UserDetailsSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(request.user, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response()
+
 class ChangePasswordAPI(generics.UpdateAPIView):
     """
     Change user password
@@ -57,6 +70,7 @@ class ChangePasswordAPI(generics.UpdateAPIView):
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(request.user, data=request.data)
+        
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response()
