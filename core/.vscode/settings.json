@@ -29,5 +29,7 @@
         "env.bak{,/**}",
         "venv.bak{,/**}",
         ".vscode{,/**}"
-    ]
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/daff0907-afb1-440b-8b98-d9ececd151db/microsoft.web/sites/subscriptions/daff0907-afb1-440b-8b98-d9ececd151db/resourceGroups/djangoappstonks_group/providers/Microsoft.Web/sites/djangoappstonks",
+    "appService.deploySubpath": "."
 }

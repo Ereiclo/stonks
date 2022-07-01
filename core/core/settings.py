@@ -68,12 +68,11 @@ Alternatives: CORS_ALLOWD_ORIGINS, CORS_ORIGIN_REGEX_WHITELIST.
 
 For more details, visit: https://pypi.org/project/django-cors-headers/
 """ 
-CORS_ALLOW_ALL_ORIGINS = True
-# CORS_ORIGIN_WHITELIST = (
-#     'http://localhost:3000',
-#     'http://127.0.0.1:3000',
-#     'https://62be3f2702ba4b0a31f6ae1c--ephemeral-kelpie-a9d0f0.netlify.app',
-# )
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'https://62bf4f0b2da60925cd16c07c--ephemeral-kelpie-a9d0f0.netlify.app'
+)
 
 ROOT_URLCONF = 'core.urls'
 
