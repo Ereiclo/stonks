@@ -16,6 +16,9 @@ def matching_service_buy(order,relevant_orders):
     total_quantity = 0
     matched = False
     
+    if order.quantity_left == 0:
+        return
+
     for current_order in relevant_orders:  	
         seller = current_order.client_dni
         seller_portfolio = Portfolio.objects.get(client_dni = seller, company_ruc = current_order.company_ruc)
@@ -92,6 +95,9 @@ def matching_service_sell(order,relevant_orders):
         seller_portfolio = Portfolio.objects.get(client_dni = seller, company_ruc = order.company_ruc)
     except Portfolio.DoesNotExist:
         seller_portfolio = Portfolio.objects.create(client_dni = seller,company_ruc=order.company_ruc,quantity= 0)
+
+    if order.quantity_left == 0:
+        return
     
     for current_order in relevant_orders:  	
         buyer = current_order.client_dni
@@ -156,8 +162,11 @@ def matching_service_sell(order,relevant_orders):
 
 
 def matching_service(order):
-      	#lock()
-    company_orders = Order.objects.filter(company_ruc = order.company_ruc_id).exclude(client_dni_id = order.client_dni_id).exclude( transaction_type__startswith = order.transaction_type[0])
+    #lock()
+    pending_orders_id = IncompleteOrder.objects.filter(status = IncompleteOrder.OrderStatus.PENDING)
+    pending_orders = Order.objects.filter(id__in = pending_orders_id)
+
+    company_orders = pending_orders.filter(company_ruc = order.company_ruc_id).exclude(client_dni_id = order.client_dni_id).exclude( transaction_type__startswith = order.transaction_type[0])
     if order.transaction_type[0] == 'B':  # compra 
         company_orders.filter(price__lte = order.price).order_by("price","date")
         matching_service_buy(order,company_orders)
