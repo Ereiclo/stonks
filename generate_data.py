@@ -1,14 +1,17 @@
-import django
+#para ejecutar correr lo siguiente en python manage.py shell:
+#exec(open('<direccion>/generate_data.py').read())
 from accounts.models import Client
-from stocks.models import Portfolio, Company, Order, CompleteOrder
+from stocks.models import Portfolio, Company, Order
 from knox.models import AuthToken as KnoxAuthToken
+from django.utils import timezone
+
 
 user1_data = {
     'dni': '12345678',
     'names': 'TestName',
     'lastname': 'TestLastName',
     'password': 'TestPassword',
-    'email': 'test@test.com'
+    'email': 'test@te st.com'
 }
 
 user2_data = {
@@ -38,11 +41,13 @@ portafolio1_data = [
     {
         'client_dni': user1_data['dni'],
         'company_ruc': companies_data[0]['ruc'],
+      	'avg_price': 64.90,
         'quantity': 5,
     },
     {
         'client_dni': user1_data['dni'],
         'company_ruc': companies_data[1]['ruc'],
+      	'avg_price': 53.10,
         'quantity': 10,
     },
 ]
@@ -51,11 +56,13 @@ portafolio2_data = [
     {
         'client_dni': user2_data['dni'],
         'company_ruc': companies_data[0]['ruc'],
-        'quantity': 10,
+      	'avg_price': 49.10,
+        'quantity': 15,
     },
     {
         'client_dni': user2_data['dni'],
         'company_ruc': companies_data[1]['ruc'],
+      	'avg_price': 52.10,
         'quantity': 20,
     },
 ]
@@ -65,15 +72,21 @@ orders1_data = [
         'client_dni': user1_data['dni'],
         'company_ruc': companies_data[0]['ruc'],
         'quantity': 15,
+      	'quantity_left': 15,
         'price': 25.62,
         'transaction_type': Order.TransactionType.BUY_LIMIT,
+      	'avg_price': 25.70,
+      	'date' : timezone.now()
     },
     {
         'client_dni': user1_data['dni'],
         'company_ruc': companies_data[1]['ruc'],
         'quantity': 20,
+      	'quantity_left': 20,
         'price': 23.41,
+      	'avg_price': 23.60,
         'transaction_type': Order.TransactionType.SELL_STOP,
+      	'date' : timezone.now()
     },
 ]
 
@@ -81,33 +94,22 @@ orders2_data = [
     {
         'client_dni': user2_data['dni'],
         'company_ruc': companies_data[0]['ruc'],
+      	'date' : timezone.now(),
         'quantity': 11,
+      	'quantity_left': 11,
         'price': 78.94,
+      	'avg_price': 0,
         'transaction_type': Order.TransactionType.BUY_MARKET,
     },
     {
         'client_dni': user2_data['dni'],
         'company_ruc': companies_data[1]['ruc'],
+      	'date' : timezone.now(),
         'quantity': 19,
+      	'quantity_left': 19,
         'price': 65.21,
+      	'avg_price': 0,
         'transaction_type': Order.TransactionType.SELL_LIMIT,
-    },
-]
-
-complete_orders1_data = [
-    {
-        'client_dni': user1_data['dni'],
-        'company_ruc': companies_data[0]['ruc'],
-        'quantity': 15,
-        'price': 25.62,
-        'transaction_type': Order.TransactionType.BUY_LIMIT,
-    },
-    {
-        'client_dni': user1_data['dni'],
-        'company_ruc': companies_data[1]['ruc'],
-        'quantity': 20,
-        'price': 23.41,
-        'transaction_type': Order.TransactionType.SELL_STOP,
     },
 ]
 
@@ -144,10 +146,7 @@ def utility_generate_orders(orders_list):
         tmp = o.copy()
         tmp['client_dni'] = Client.objects.get(dni=o['client_dni'])
         tmp['company_ruc'] = Company.objects.get(ruc=o['company_ruc'])
-        t = Order(**tmp)
-        t.save()
-        CompleteOrder.objects.create(order_id=t, price_per_stock=5.6)
-        
+        Order.objects.create(**tmp)
 
 utility_generate_user_data_and_token(user1_data)
 utility_generate_user_data_and_token(user2_data)
