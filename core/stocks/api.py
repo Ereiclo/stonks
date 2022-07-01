@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from .serializers import DetailedPortfolioSerializer, DetailedOrderSerializer, \
-    BasicOrderSerializer, BasicCompanySerializer
-from .models import Portfolio, Order, Company, IncompleteOrder
+from .serializers import CompletedOrderSerializer, DetailedPortfolioSerializer, DetailedOrderSerializer, \
+    BasicOrderSerializer, BasicCompanySerializer 
+from .models import CompleteOrder, Portfolio, Order, Company, IncompleteOrder
 from .exception import UserNotEnoughMoney, UserNotEnoughStocks, UnexpectedOrderError
+from .matching_service import matching_service
 import decimal
 
 
@@ -40,6 +41,24 @@ class UserOrdersByCompanyAPI(generics.ListAPIView):
         user = self.request.user
         company = get_object_or_404(Company, acronym=self.kwargs['company'])
         return Order.objects.filter(client_dni=user.dni, company_ruc=company)
+
+
+
+
+class UserCompletedOrders(generics.ListAPIView):
+    """
+    List of User's Completed Orders
+    """
+    serializer_class = CompletedOrderSerializer
+    def get_queryset(self):
+        user = self.request.user
+
+        # print(CompleteOrder.objects.filter(order_id__client_dni = user.dni))
+        return CompleteOrder.objects.filter(order_id__client_dni = user.dni)
+
+
+
+
 
 
 class NewOrderAPI(generics.GenericAPIView):
@@ -87,8 +106,11 @@ class NewOrderAPI(generics.GenericAPIView):
         # Update DataBase
         # Create order & associated incomplete order
         order = serializer.save()
+        order.quantity_left = order.quantity
+        order = serializer.save()
         IncompleteOrder.objects.create(order_id=order, status=IncompleteOrder.OrderStatus.PENDING)
         # Return detailed order serialized data
+        matching_service(order)
         response = DetailedOrderSerializer(order)
         return Response(response.data)
 

@@ -1,6 +1,7 @@
 from django.db import models
 from accounts.models import Client
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 from datetime import datetime,date
 from django.core.validators import RegexValidator
 
@@ -56,7 +57,7 @@ class Order(models.Model):
     transaction_type = models.CharField(max_length=2, choices=TransactionType.choices)
     avg_price = models.DecimalField(max_digits=7, decimal_places=2,default=0)
     quantity_left = models.IntegerField(default=0)
-    date = models.DateTimeField(default=datetime.now())
+    date = models.DateTimeField(auto_now_add=True)
 
 
 
