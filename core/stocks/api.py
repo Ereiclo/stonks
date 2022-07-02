@@ -5,7 +5,7 @@ from .serializers import CompletedOrderSerializer, DetailedPortfolioSerializer, 
     BasicOrderSerializer, BasicCompanySerializer 
 from .models import CompleteOrder, Portfolio, Order, Company, IncompleteOrder
 from .exception import UserNotEnoughMoney, UserNotEnoughStocks, UnexpectedOrderError
-from .matching_service import matching_service
+from .matching_service import MatchingService, matching_service
 import decimal
 
 
@@ -110,7 +110,7 @@ class NewOrderAPI(generics.GenericAPIView):
         order = serializer.save()
         IncompleteOrder.objects.create(order_id=order, status=IncompleteOrder.OrderStatus.PENDING)
         # Return detailed order serialized data
-        matching_service(order)
+        MatchingService().enqueue_order(order)
         response = DetailedOrderSerializer(order)
         return Response(response.data)
 

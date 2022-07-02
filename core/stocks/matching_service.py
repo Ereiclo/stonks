@@ -1,8 +1,49 @@
 from doctest import DocFileSuite
 from .models import Portfolio,IncompleteOrder,CompleteOrder,Order
+from queue import Queue
+from threading import Lock, Condition, Thread
 
 
+class SingletonMeta(type):
+    """
+    This is a thread-safe implementation of Singleton.
+    """
+    _instances = {}
+    _lock: Lock = Lock()
 
+    def __call__(cls, *args, **kwargs):
+        with cls._lock:
+            if cls not in cls._instances:
+                instance = super().__call__(*args, **kwargs)
+                cls._instances[cls] = instance
+        return cls._instances[cls]
+
+
+class MatchingService(metaclass=SingletonMeta):
+    """
+    Matching Service Singleton Caller
+    """
+    order_queue = Queue()
+    order_queue_lock = Lock()
+    order_ready = Condition()
+
+    def __init__(self) -> None:
+        self.worker = Thread(target=self.execute_method)
+        self.worker.start()
+
+    def enqueue_order(self, order):
+        with self.order_queue_lock:
+            self.order_queue.put(order)
+        with self.order_ready:
+            self.order_ready.notify()
+
+    def execute_method(self):
+        while True:
+            with self.order_ready:
+                self.order_ready.wait()
+            with self.order_queue_lock:
+                order = self.order_queue.get()
+            matching_service(order)
 
 #compra
 def matching_service_buy(order,relevant_orders):
@@ -77,7 +118,8 @@ def matching_service_buy(order,relevant_orders):
         order.company_ruc.save()
 
 
-    order.avg_price = total_sold / total_quantity
+    if total_quantity > 0:
+        order.avg_price = total_sold / total_quantity
     buyer.save()
     order.save()
 
@@ -156,24 +198,27 @@ def matching_service_sell(order,relevant_orders):
         order.company_ruc.latest_price = price
         order.company_ruc.save()
 
-    order.avg_price = total_bought / total_quantity
+    if total_quantity > 0:
+        order.avg_price = total_bought / total_quantity
     seller.save()
     order.save()
 
 
 def matching_service(order):
-    #lock()
+
     pending_orders_id = IncompleteOrder.objects.filter(status = IncompleteOrder.OrderStatus.PENDING)
     pending_orders = Order.objects.filter(id__in = pending_orders_id)
 
+
     company_orders = pending_orders.filter(company_ruc = order.company_ruc_id).exclude(client_dni_id = order.client_dni_id).exclude( transaction_type__startswith = order.transaction_type[0])
+    print(pending_orders)
+    print(company_orders)
     if order.transaction_type[0] == 'B':  # compra 
         company_orders.filter(price__lte = order.price).order_by("price","date")
         matching_service_buy(order,company_orders)
     elif order.transaction_type[0] == 'S':	# venta
         company_orders.filter(price__gte = order.price).order_by("-price","date")
         matching_service_sell(order,company_orders)
-#unlock()
 
 
 

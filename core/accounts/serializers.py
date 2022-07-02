@@ -9,8 +9,8 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Client
-        fields = ('dni', 'names', 'lastname', 'email')
-        extra_kwargs = {'dni': {'read_only': True}}
+        fields = ('dni', 'names', 'lastname', 'email','money')
+        extra_kwargs = {'dni': {'read_only': True},'money':{'read_only':True}}
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
