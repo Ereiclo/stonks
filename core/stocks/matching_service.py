@@ -214,10 +214,12 @@ def matching_service(order):
     print(pending_orders)
     print(company_orders)
     if order.transaction_type[0] == 'B':  # compra 
-        company_orders.filter(price__lte = order.price).order_by("price","date")
+        company_orders = company_orders.filter(price__lte = order.price).order_by("price","date")
+        print(company_orders)
         matching_service_buy(order,company_orders)
     elif order.transaction_type[0] == 'S':	# venta
-        company_orders.filter(price__gte = order.price).order_by("-price","date")
+        company_orders = company_orders.filter(price__gte = order.price).order_by("-price","date")
+        print(company_orders)
         matching_service_sell(order,company_orders)
 
 
