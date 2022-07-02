@@ -27,17 +27,17 @@ localhost:5432:postgres:<usuario>:<contraseña>
 chmod 0600 <repo>/core/.pgpass
 ```
 
-### Matching Service
+# Matching Service
 
 A la hora de agregar una nueva orden, se ejecuta el servicio de matcheo. Este servicio verifica si existe alguna compra que satisfaga a la orden recien creada.
 
 Para poder "matchear" las ordenes, se debe pasar por una serie de filtros dependiendo del tipo de la nueva orden. Cabe recalcar que se deben excluir todas las ordenes que provengan del mismo usuario que creó la nueva orden.
 
-# Venta
+### Venta
 - Seleccionar todas las órdenes de compra
 - Las órdenes deben tener un precio mayor o igual a la nueva orden de venta
 - Las órdenes serán ordenadas de manera descendente
-# Compra
+### Compra
 - Seleccionar todas las órdenes de venta
 - Las órdenes deben tener un precio menor o igual a la nueva orden de venta
 - Las órdenes serán ordenadas de manera ascendente
