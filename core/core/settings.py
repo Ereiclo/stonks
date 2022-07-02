@@ -67,11 +67,15 @@ CORS ALLOWED DOMAINS
 Alternatives: CORS_ALLOWD_ORIGINS, CORS_ORIGIN_REGEX_WHITELIST.
 
 For more details, visit: https://pypi.org/project/django-cors-headers/
-""" 
+"""
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
     'http://127.0.0.1:3000',
-    'https://62bf4f0b2da60925cd16c07c--ephemeral-kelpie-a9d0f0.netlify.app'
+    'https://62bf681191bd053853572f31--ephemeral-kelpie-a9d0f0.netlify.app'
 )
 
 ROOT_URLCONF = 'core.urls'
