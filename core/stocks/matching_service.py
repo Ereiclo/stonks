@@ -209,17 +209,12 @@ def matching_service(order):
     pending_orders_id = IncompleteOrder.objects.filter(status = IncompleteOrder.OrderStatus.PENDING)
     pending_orders = Order.objects.filter(id__in = pending_orders_id)
 
-
     company_orders = pending_orders.filter(company_ruc = order.company_ruc_id).exclude(client_dni_id = order.client_dni_id).exclude( transaction_type__startswith = order.transaction_type[0])
-    print(pending_orders)
-    print(company_orders)
     if order.transaction_type[0] == 'B':  # compra 
         company_orders = company_orders.filter(price__lte = order.price).order_by("price","date")
-        print(company_orders)
         matching_service_buy(order,company_orders)
     elif order.transaction_type[0] == 'S':	# venta
         company_orders = company_orders.filter(price__gte = order.price).order_by("-price","date")
-        print(company_orders)
         matching_service_sell(order,company_orders)
 
 
